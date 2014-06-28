@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:minHeight="130dp"
-                android:gravity="center_vertical"
-                android:background="#2235b5e5"
-                android:layout_height="match_parent">
+              android:orientation="horizontal"
+              android:layout_width="match_parent"
+              android:minHeight="130dp"
+              android:gravity="center_vertical"
+              android:background="#2235b5e5"
+              android:layout_height="match_parent">
     <RadioButton
             android:layout_centerVertical="true"
             android:id="@+id/node_check"
@@ -29,15 +29,11 @@
             >
 
 
-
-
-
         <TextView
                 android:id="@+id/node_name"
                 android:layout_toRightOf="@id/node_check"
                 android:layout_width="match_parent"
                 android:textSize="24sp"
-                android:text="111111111"
                 android:gravity="center_horizontal"
                 android:layout_height="wrap_content"/>
 
@@ -55,11 +51,16 @@
 
 
     <Button
+            android:layout_marginLeft="20dp"
             android:layout_centerVertical="true"
+            android:background="#aa0099cc"
             android:layout_width="0dp"
             android:layout_weight="2"
+            android:text="@string/speed_test"
             android:layout_marginRight="10dp"
-            android:layout_height="wrap_content"/>
+            android:textColor="#bbffffff"
+            android:textSize="20sp"
+            android:layout_height="40dp"/>
 
 
 </LinearLayout>

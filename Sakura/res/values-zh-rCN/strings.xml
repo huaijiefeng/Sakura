@@ -77,4 +77,5 @@
     <string name="cs_phone_string">400&#8211;059&#8211;0012</string>
     <string name="cs_email_string">kf@ismartv.cn</string>
     <string name="cs_weibo_string">视云影院</string>
+    <string name="speed_test">测速</string>
 </resources>
