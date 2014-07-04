@@ -1,20 +1,9 @@
-package cn.ismartv.sakura.core;
+package cn.ismartv.sakura.core.download;
 
-import android.os.Environment;
 import android.util.Log;
-import cn.ismartv.sakura.utils.DevicesUtilities;
-import cn.ismartv.sakura.utils.StringUtilities;
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
 
-import java.io.*;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
@@ -35,5 +24,4 @@ public class HttpDownload {
         ExecutorService executorService = Executors.newSingleThreadExecutor();
         Future<List<Map<String, String>>> future = executorService.submit(new DownloadTask(list));
     }
-
 }

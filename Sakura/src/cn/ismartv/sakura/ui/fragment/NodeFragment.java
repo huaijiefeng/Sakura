@@ -23,7 +23,6 @@ public class NodeFragment extends Fragment implements AdapterView.OnItemClickLis
     public static final String NODE_SPEED = "node_speed";
 
     private GridView nodes;
-
     private List<HashMap<String, String>> list;
 
     @Override
@@ -51,5 +50,4 @@ public class NodeFragment extends Fragment implements AdapterView.OnItemClickLis
     public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
 
     }
-
 }
