@@ -1,6 +1,8 @@
 package cn.ismartv.sakura.ui.fragment;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +10,8 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import cn.ismartv.sakura.R;
+import cn.ismartv.sakura.core.httpclient.NetWorkUtilities;
+import cn.ismartv.sakura.data.Nodes;
 import cn.ismartv.sakura.ui.adapter.NodeListAdapter;
 
 import java.util.ArrayList;
@@ -18,12 +22,23 @@ import java.util.List;
  * Created by fenghb on 14-6-25.
  */
 public class NodeFragment extends Fragment implements AdapterView.OnItemClickListener {
-    public static final String NODE_NAME = "node_name";
-    public static final String NODE_CHECK = "node_check";
-    public static final String NODE_SPEED = "node_speed";
 
     private GridView nodes;
     private List<HashMap<String, String>> list;
+
+    public static final int TEST_COMPLETE = 0x0001;
+    public static final int GET_NODE_LIST = 0x0002;
+    public static final int GET_NODE_LIST_COMPLETE = 0x0003;
+
+    public static Handler messageHandler;
+
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        messageHandler = new MessageHandler();
+        messageHandler.sendEmptyMessage(GET_NODE_LIST);     //get node list from server
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -34,20 +49,32 @@ public class NodeFragment extends Fragment implements AdapterView.OnItemClickLis
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         nodes = (GridView) view.findViewById(R.id.node_list_view);
-        //test
-        list = new ArrayList<HashMap<String, String>>();
-        HashMap<String, String> map = new HashMap<String, String>();
-        map.put(NODE_NAME, "上海电信节点");
-        map.put(NODE_SPEED, "80");
-        map.put(NODE_CHECK, "false");
-        for (int i = 0; i < 10; i++) {
-            list.add(map);
-        }
-        nodes.setAdapter(new NodeListAdapter(getActivity(), list));
     }
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
 
+    }
+
+
+    private class MessageHandler extends Handler {
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case TEST_COMPLETE:
+
+                    break;
+                case GET_NODE_LIST:
+                    NetWorkUtilities.getNodeList();
+                    break;
+                case GET_NODE_LIST_COMPLETE:
+
+                    nodes.setAdapter(new NodeListAdapter(getActivity(), (Nodes) msg.obj));
+                    break;
+                default:
+
+                    break;
+            }
+        }
     }
 }

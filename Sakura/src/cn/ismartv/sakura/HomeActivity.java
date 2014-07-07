@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import cn.ismartv.sakura.core.httpclient.NetWorkUtilities;
 import cn.ismartv.sakura.ui.fragment.FeedbackFragment;
 import cn.ismartv.sakura.ui.fragment.NodeFragment;
 import com.viewpagerindicator.TabPageIndicator;
@@ -17,18 +18,17 @@ public class HomeActivity extends FragmentActivity {
     private static final String[] CONTENT = new String[]{"Node", "Feedback"};
     private static final Fragment[] FRAGMENTS = {new NodeFragment(), new FeedbackFragment()};
 
-    public static final int TEST_COMPLETE = 0x0001;
 
-    private Handler messageHandler;
+    private FragmentPagerAdapter adapter;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
-        messageHandler = new MessageHandler();
 
-        FragmentPagerAdapter adapter = new HomeAdapter(getSupportFragmentManager());
+
+        adapter = new HomeAdapter(getSupportFragmentManager());
 
         ViewPager pager = (ViewPager) findViewById(R.id.pager);
         pager.setAdapter(adapter);
@@ -58,15 +58,5 @@ public class HomeActivity extends FragmentActivity {
         }
     }
 
-    private class MessageHandler extends Handler {
-        @Override
-        public void handleMessage(Message msg) {
-            switch (msg.what) {
-                case TEST_COMPLETE:
-                    break;
-                default:
-                    break;
-            }
-        }
-    }
+
 }

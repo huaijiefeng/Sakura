@@ -6,7 +6,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 import cn.ismartv.sakura.R;
+import cn.ismartv.sakura.data.Nodes;
 import cn.ismartv.sakura.ui.fragment.NodeFragment;
+import org.w3c.dom.Node;
 
 import java.util.HashMap;
 import java.util.List;
@@ -16,21 +18,21 @@ import java.util.List;
  */
 public class NodeListAdapter extends BaseAdapter {
     private Context mContext;
-    private List<HashMap<String, String>> nodeList;
+    private Nodes nodeList;
 
-    public NodeListAdapter(Context context, List<HashMap<String, String>> nodeList) {
+    public NodeListAdapter(Context context, Nodes nodeList) {
         this.mContext = context;
         this.nodeList = nodeList;
     }
 
     @Override
     public int getCount() {
-        return nodeList.size();
+        return nodeList.getCdn_list().size();
     }
 
     @Override
     public Object getItem(int position) {
-        return nodeList.get(position);
+        return nodeList.getCdn_list().get(position);
     }
 
     @Override
@@ -51,9 +53,8 @@ public class NodeListAdapter extends BaseAdapter {
             holder.nodeName = (TextView) convertView.findViewById(R.id.node_name);
             convertView.setTag(holder);
         }
-        holder.nodeName.setText(nodeList.get(position).get(NodeFragment.NODE_NAME));
-        holder.nodeSpeed.setProgress(Integer.valueOf(nodeList.get(position).get(NodeFragment.NODE_SPEED)));
-        holder.nodeCheck.setChecked(Boolean.valueOf(nodeList.get(position).get(NodeFragment.NODE_CHECK)));
+        Nodes.Node node = nodeList.getCdn_list().get(position);
+        holder.nodeName.setText(node.getName());
         return convertView;
     }
 
