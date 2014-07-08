@@ -82,4 +82,5 @@
     <item name="edit_phonenum" type="id">false</item>
     <item name="edit_address" type="id">false</item>
     <item name="edit_email" type="id">false</item>
+    <string name="connect_refused">connect refused!!!</string>
 </resources>

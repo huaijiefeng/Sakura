@@ -5,18 +5,15 @@ import android.util.Log;
 import cn.ismartv.sakura.data.Nodes;
 import cn.ismartv.sakura.ui.fragment.NodeFragment;
 import com.google.gson.Gson;
-import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicHeader;
 import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
-import java.util.List;
 
 /**
  * Created by fenghb on 14-7-4.
@@ -39,7 +36,9 @@ public class NetWorkUtilities {
                 try {
                     response = client.execute(get);
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    Log.e(TAG, e.getMessage());
+                    NodeFragment.messageHandler.sendEmptyMessage(NodeFragment.CONNECTION_REFUSED);
+                    return;
                 }
                 if (response.getStatusLine().
                         getStatusCode() == HttpStatus.SC_OK) {
