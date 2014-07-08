@@ -53,7 +53,6 @@
     <Button
             android:layout_marginLeft="20dp"
             android:layout_centerVertical="true"
-            android:background="#aa0099cc"
             android:layout_width="0dp"
             android:layout_weight="2"
             android:text="@string/speed_test"
@@ -61,6 +60,8 @@
             android:textColor="#bbffffff"
             android:textSize="20sp"
             android:layout_height="40dp"/>
+
+    <!--android:background="#aa0099cc"-->
 
 
 </LinearLayout>

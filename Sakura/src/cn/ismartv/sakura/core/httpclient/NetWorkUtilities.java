@@ -21,7 +21,7 @@ import java.io.IOException;
 public class NetWorkUtilities {
     private static final String TAG = "NetWorkUtilities";
 
-    private static final String HOST = "http://192.168.16.177:8099";
+    private static final String HOST = "http://192.168.16.103:8099";
     private static final String GET_NODE_URL = "/shipinkefu/getCdninfo";
 
     public static void getNodeList() {

@@ -48,6 +48,7 @@ public class NodeListAdapter extends BaseAdapter {
         } else {
             holder = new ViewHolder();
             convertView = LayoutInflater.from(mContext).inflate(R.layout.item_node_list, null);
+            convertView.setFocusable(false);
             holder.nodeCheck = (RadioButton) convertView.findViewById(R.id.node_check);
             holder.nodeSpeed = (ProgressBar) convertView.findViewById(R.id.node_speed);
             holder.nodeName = (TextView) convertView.findViewById(R.id.node_name);

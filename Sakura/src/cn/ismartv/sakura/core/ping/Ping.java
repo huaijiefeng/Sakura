@@ -281,11 +281,11 @@ public class Ping {
 
     }
 
-    public int ping() {
+    public int ping(String ip) {
         Printer printer = new Printer();
         printer.start();
         Connector connector = null;
-        Target t = new Target("61.135.169.105", 80);
+        Target t = new Target(ip, 80);
         try {
             connector = new Connector(printer);
             connector.start();
@@ -295,7 +295,7 @@ public class Ping {
             connector.add(t);
 
             // Wait for everything to finish
-            Thread.sleep(1000);
+            Thread.sleep(2000);
             connector.shutdown();
             connector.join();
 

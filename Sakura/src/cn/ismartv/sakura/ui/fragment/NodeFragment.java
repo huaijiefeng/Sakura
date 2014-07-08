@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.ListView;
 import android.widget.Toast;
 import cn.ismartv.sakura.R;
 import cn.ismartv.sakura.core.httpclient.NetWorkUtilities;
@@ -55,29 +56,24 @@ public class NodeFragment extends Fragment implements AdapterView.OnItemClickLis
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-
     }
-
 
     private class MessageHandler extends Handler {
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case TEST_COMPLETE:
-
                     break;
                 case GET_NODE_LIST:
                     NetWorkUtilities.getNodeList();
                     break;
                 case GET_NODE_LIST_COMPLETE:
-
                     nodes.setAdapter(new NodeListAdapter(getActivity(), (Nodes) msg.obj));
                     break;
                 case CONNECTION_REFUSED:
                     Toast.makeText(getActivity(), R.string.connect_refused, Toast.LENGTH_LONG).show();
                     break;
                 default:
-
                     break;
             }
         }
