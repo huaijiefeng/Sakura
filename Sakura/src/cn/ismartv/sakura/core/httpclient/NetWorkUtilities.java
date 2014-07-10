@@ -2,6 +2,8 @@ package cn.ismartv.sakura.core.httpclient;
 
 import android.os.Message;
 import android.util.Log;
+import cn.ismartv.sakura.core.download.DownloadTask;
+import cn.ismartv.sakura.core.download.HttpDownload;
 import cn.ismartv.sakura.data.Nodes;
 import cn.ismartv.sakura.ui.fragment.NodeFragment;
 import com.google.gson.Gson;
@@ -28,9 +30,7 @@ public class NetWorkUtilities {
         new Thread() {
             @Override
             public void run() {
-
                 HttpClient client = new DefaultHttpClient();
-
                 HttpGet get = new HttpGet(HOST + GET_NODE_URL);
                 HttpResponse response = null;
                 try {
@@ -52,8 +52,11 @@ public class NetWorkUtilities {
                     Log.d(TAG, result);
 
                     Nodes nodes = new Gson().fromJson(result, Nodes.class);
+
                     Message message = NodeFragment.messageHandler.obtainMessage(NodeFragment.GET_NODE_LIST_COMPLETE, nodes);
                     NodeFragment.messageHandler.sendMessage(message);
+                    HttpDownload httpDownload = new HttpDownload();
+                    httpDownload.download(nodes);
                 } else {
                     Log.e(TAG, response.getStatusLine().toString());
                 }

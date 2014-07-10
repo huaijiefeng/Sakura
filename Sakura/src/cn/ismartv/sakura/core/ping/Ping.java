@@ -52,7 +52,6 @@ import java.nio.channels.Selector;
 import java.nio.channels.SocketChannel;
 import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.regex.Pattern;
 
 
 public class Ping {
@@ -126,12 +125,11 @@ public class Ping {
                 return;
             }
         }
-
     }
 
 
     // Thread for connecting to all targets in parallel via a single selector
-    //
+    
     static class Connector
             extends Thread {
         Selector sel;
@@ -254,14 +252,12 @@ public class Ping {
         volatile boolean shutdown = false;
 
         // Invoked by the main thread when it's time to shut down
-        //
         void shutdown() {
             shutdown = true;
             sel.wakeup();
         }
 
         // Connector loop
-        //
         public void run() {
             for (; ; ) {
                 try {
@@ -278,7 +274,6 @@ public class Ping {
                 }
             }
         }
-
     }
 
     public int ping(String ip) {
@@ -289,25 +284,18 @@ public class Ping {
         try {
             connector = new Connector(printer);
             connector.start();
-
             // Create the targets and add them to the connector
-
             connector.add(t);
-
             // Wait for everything to finish
             Thread.sleep(2000);
             connector.shutdown();
             connector.join();
-
         } catch (IOException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
         // Print status of targets that have not yet been shown
         return t.show();
-
     }
-
 }

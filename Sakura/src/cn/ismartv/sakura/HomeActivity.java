@@ -8,13 +8,30 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
+import cn.ismartv.sakura.core.download.DownloadTask;
+import cn.ismartv.sakura.core.download.HttpDownload;
 import cn.ismartv.sakura.core.httpclient.NetWorkUtilities;
+import cn.ismartv.sakura.data.Nodes;
 import cn.ismartv.sakura.ui.fragment.FeedbackFragment;
 import cn.ismartv.sakura.ui.fragment.NodeFragment;
+import com.google.gson.Gson;
 import com.viewpagerindicator.TabPageIndicator;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
+
+import java.io.IOException;
 
 
 public class HomeActivity extends FragmentActivity {
+    private static final String FILE_URL = "http://210.14.137.56/cdn/speedtest.ts";
+
+    private static final String TAG = "HomeActivity";
     private static final String[] CONTENT = new String[]{"Node", "Feedback"};
     private static final Fragment[] FRAGMENTS = {new NodeFragment(), new FeedbackFragment()};
 
@@ -26,7 +43,6 @@ public class HomeActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
-
 
         adapter = new HomeAdapter(getSupportFragmentManager());
 
@@ -57,6 +73,4 @@ public class HomeActivity extends FragmentActivity {
             return CONTENT.length;
         }
     }
-
-
 }

@@ -7,6 +7,7 @@ import java.util.List;
  */
 public class Nodes {
 
+
     private List<Node> cdn_list;
 
     public List<Node> getCdn_list() {
@@ -23,6 +24,29 @@ public class Nodes {
         private String name;
         private String route_trace;
         private String url;
+        private String ping;
+
+        public String getPing() {
+            return ping;
+        }
+
+        public void setPing(String ping) {
+            this.ping = ping;
+        }
+
+        public String getSpeed() {
+            return speed;
+        }
+
+        public void setSpeed(String speed) {
+            this.speed = speed;
+        }
+
+        private String speed;
+
+        public String getTestFile() {
+            return "http://" + getUrl() + "/cdn/speedtest.ts";
+        }
 
         public String getCdnID() {
             return cdnID;
@@ -57,7 +81,7 @@ public class Nodes {
         }
 
         public String getUrl() {
-            return url;
+            return url.replace("|", "-").split("-")[0];
         }
 
         public void setUrl(String url) {
