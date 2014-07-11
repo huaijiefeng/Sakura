@@ -18,6 +18,11 @@ import java.util.List;
  */
 public class NodeListAdapter extends BaseAdapter {
     private Context mContext;
+
+    public void setNodeList(Nodes nodeList) {
+        this.nodeList = nodeList;
+    }
+
     private Nodes nodeList;
 
     public NodeListAdapter(Context context, Nodes nodeList) {

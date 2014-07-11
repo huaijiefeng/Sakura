@@ -35,4 +35,8 @@ public class DevicesUtilities {
             file.mkdirs();
         return file.getAbsolutePath();
     }
+
+    public static String getSNCode() {
+        return android.os.Build.SERIAL;
+    }
 }

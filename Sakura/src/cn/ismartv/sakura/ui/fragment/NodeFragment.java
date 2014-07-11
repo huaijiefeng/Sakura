@@ -32,9 +32,11 @@ public class NodeFragment extends Fragment implements AdapterView.OnItemClickLis
     public static final int GET_NODE_LIST = 0x0002;
     public static final int GET_NODE_LIST_COMPLETE = 0x0003;
     public static final int CONNECTION_REFUSED = 0x0004;
+    public static final int SPEEDTEST_COMPLETE = 0x0005;
 
     public static Handler messageHandler;
 
+    private NodeListAdapter nodeListAdapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -65,13 +67,18 @@ public class NodeFragment extends Fragment implements AdapterView.OnItemClickLis
                 case TEST_COMPLETE:
                     break;
                 case GET_NODE_LIST:
-                    NetWorkUtilities.getNodeList();
+                    NetWorkUtilities.getTag();
                     break;
                 case GET_NODE_LIST_COMPLETE:
-                    nodes.setAdapter(new NodeListAdapter(getActivity(), (Nodes) msg.obj));
+                    nodeListAdapter = new NodeListAdapter(getActivity(), (Nodes) msg.obj);
+                    nodes.setAdapter(nodeListAdapter);
                     break;
                 case CONNECTION_REFUSED:
                     Toast.makeText(getActivity(), R.string.connect_refused, Toast.LENGTH_LONG).show();
+                    break;
+                case SPEEDTEST_COMPLETE:
+                    nodeListAdapter.setNodeList((Nodes) msg.obj);
+                    nodeListAdapter.notifyDataSetChanged();
                     break;
                 default:
                     break;
