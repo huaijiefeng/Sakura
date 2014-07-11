@@ -1,4 +1,4 @@
-package cn.ismartv.sakura.provider.node;
+package cn.ismartv.sakura.provider;
 
 import android.content.Context;
 import android.database.DatabaseErrorHandler;
@@ -8,19 +8,19 @@ import android.database.sqlite.SQLiteOpenHelper;
 /**
  * Created by fenghb on 14-7-11.
  */
-public class DBHelper extends SQLiteOpenHelper {
+public class DatabaseHelper extends SQLiteOpenHelper {
     private static final int VERSION = 1;
     private static final String NAME = "sakura";
 
-    public DBHelper(Context context) {
+    public DatabaseHelper(Context context) {
         this(context, NAME, null, VERSION);
     }
 
-    public DBHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
+    public DatabaseHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, NAME, factory, VERSION);
     }
 
-    public DBHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version, DatabaseErrorHandler errorHandler) {
+    public DatabaseHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version, DatabaseErrorHandler errorHandler) {
         super(context, NAME, factory, VERSION, errorHandler);
     }
 

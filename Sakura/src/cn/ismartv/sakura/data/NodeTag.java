@@ -1,9 +1,9 @@
-package cn.ismartv.sakura.data.node;
+package cn.ismartv.sakura.data;
 
 /**
  * Created by fenghb on 14-7-11.
  */
-public class Tag {
+public class NodeTag {
     private boolean changed;
 
     public boolean isChanged() {

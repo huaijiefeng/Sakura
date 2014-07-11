@@ -1,0 +1,44 @@
+package cn.ismartv.sakura.provider;
+
+import android.net.Uri;
+import android.provider.BaseColumns;
+
+import java.util.HashMap;
+
+/**
+ * Created by fenghb on 14-7-11.
+ */
+public class NodeCache {
+    //table_name
+    public static final String TABLE_NAME = "node_cache";
+    //projectionMap
+    public static HashMap<String, String> projectionMap;
+    //columns
+    public static final String ID = BaseColumns._ID;
+    public static final String CDN_ID = "cdn_id";
+    public static final String NODE = "node";
+    public static final String FLAG = "flag";
+    public static final String IP = "ip";
+    public static final String URL = "url";
+    public static final String ROUTE_TRACE = "route_trace";
+    public static final String SPEED = "speed";
+    public static final String UPDATE_TIME = "update_time";
+
+    public static final Uri CONTENT_URI = Uri.parse("content://"
+            + SakuraProvider.AUTHORITY + "/" + TABLE_NAME);
+
+    //create table sql
+    public static final String CREATE_TABLE_SQL = "CREATE TABLE "
+            + TABLE_NAME + " (" + ID
+            + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+            + CDN_ID + " INTEGER,"
+            + NODE + " VARCHAR(255),"
+            + FLAG + " VARCHAR(255),"
+            + IP + " VARCHAR(255),"
+            + URL + " VARCHAR(255),"
+            + ROUTE_TRACE + " VARCHAR(255),"
+            + SPEED + " VARCHAR(255),"
+            + UPDATE_TIME + " VARCHAR(255))";
+
+
+}

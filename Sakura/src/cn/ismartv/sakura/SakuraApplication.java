@@ -8,5 +8,10 @@ import android.content.Context;
  */
 public class SakuraApplication extends Application {
 
-
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        SakuraInitialization initialization = new SakuraInitialization(getApplicationContext());
+        initialization.start();
+    }
 }
