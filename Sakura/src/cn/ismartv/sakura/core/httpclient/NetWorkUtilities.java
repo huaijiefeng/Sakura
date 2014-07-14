@@ -39,6 +39,7 @@ public class NetWorkUtilities {
             if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
                 HttpEntity entity = response.getEntity();
                 result = EntityUtils.toString(entity);
+
                 Log.d(TAG, result);
             } else {
                 Log.e(TAG, response.getStatusLine().toString());

@@ -10,6 +10,7 @@ import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import cn.ismartv.sakura.R;
+import cn.ismartv.sakura.provider.NodeCache;
 
 /**
  * Created by fenghb on 14-6-24.
@@ -35,5 +36,7 @@ public class NodeListAdapter extends CursorAdapter {
         TextView nodeName = (TextView) view.findViewById(R.id.node_name);
         ProgressBar nodeSpeed = (ProgressBar) view.findViewById(R.id.node_speed);
         RadioButton nodeCheck = (RadioButton) view.findViewById(R.id.node_check);
+        String node = cursor.getString(cursor.getColumnIndex(NodeCache.NICK));
+        nodeName.setText(node);
     }
 }

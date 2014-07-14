@@ -48,7 +48,6 @@ public class PingTest extends AndroidTestCase {
             response = client.execute(get);
         } catch (IOException e) {
             Log.e(TAG, e.getMessage());
-            NodeFragment.messageHandler.sendEmptyMessage(NodeFragment.CONNECTION_REFUSED);
             return;
         }
         if (response.getStatusLine().

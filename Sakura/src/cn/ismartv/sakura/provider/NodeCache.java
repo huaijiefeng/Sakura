@@ -17,12 +17,14 @@ public class NodeCache {
     public static final String ID = BaseColumns._ID;
     public static final String CDN_ID = "cdn_id";
     public static final String NODE = "node";
+    public static final String NICK = "nick";
     public static final String FLAG = "flag";
     public static final String IP = "ip";
     public static final String URL = "url";
     public static final String ROUTE_TRACE = "route_trace";
     public static final String SPEED = "speed";
     public static final String UPDATE_TIME = "update_time";
+    public static final String CHECKED = "checked";
 
     public static final Uri CONTENT_URI = Uri.parse("content://"
             + SakuraProvider.AUTHORITY + "/" + TABLE_NAME);
@@ -32,13 +34,14 @@ public class NodeCache {
             + TABLE_NAME + " (" + ID
             + " INTEGER PRIMARY KEY AUTOINCREMENT,"
             + CDN_ID + " INTEGER,"
+//            + CDN_ID + " INTEGER UNIQUE,"
             + NODE + " VARCHAR(255),"
+            + NICK + " VARCHAR(255),"
             + FLAG + " VARCHAR(255),"
             + IP + " VARCHAR(255),"
             + URL + " VARCHAR(255),"
             + ROUTE_TRACE + " VARCHAR(255),"
             + SPEED + " VARCHAR(255),"
+            + CHECKED + " VARCHAR(255),"
             + UPDATE_TIME + " VARCHAR(255))";
-
-
 }

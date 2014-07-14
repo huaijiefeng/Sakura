@@ -11,6 +11,9 @@ public class Node {
     private String url;
     private String ping;
 
+
+    private String nick;
+
     public String getPing() {
         return ping;
     }
@@ -50,7 +53,7 @@ public class Node {
     }
 
     public String getName() {
-        return name;
+        return name.replace("|", "-").split("-")[0];
     }
 
     public void setName(String name) {
@@ -72,4 +75,9 @@ public class Node {
     public void setUrl(String url) {
         this.url = url;
     }
+
+    public String getNick() {
+        return name.replace("|", "-").split("-")[1];
+    }
+
 }

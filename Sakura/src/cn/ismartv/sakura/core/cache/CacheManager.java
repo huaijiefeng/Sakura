@@ -20,6 +20,14 @@ public class CacheManager {
         ContentValues contentValues = new ContentValues();
         for (Node node : nodes) {
             contentValues.put(NodeCache.NODE, node.getName());
+            contentValues.put(NodeCache.CDN_ID, node.getCdnID());
+            contentValues.put(NodeCache.NICK, node.getNick());
+            contentValues.put(NodeCache.FLAG, node.getFlag());
+            contentValues.put(NodeCache.IP, node.getUrl());
+            contentValues.put(NodeCache.URL, node.getTestFile());
+            contentValues.put(NodeCache.ROUTE_TRACE, node.getRoute_trace());
+            contentValues.put(NodeCache.SPEED, node.getSpeed());
+            contentValues.put(NodeCache.UPDATE_TIME, System.currentTimeMillis());
             context.getContentResolver().insert(NodeCache.CONTENT_URI, contentValues);
         }
     }

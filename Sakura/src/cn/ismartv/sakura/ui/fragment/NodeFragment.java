@@ -1,9 +1,13 @@
 package cn.ismartv.sakura.ui.fragment;
 
+import android.content.Context;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.Loader;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +15,8 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.Toast;
 import cn.ismartv.sakura.R;
-import cn.ismartv.sakura.core.httpclient.NetWorkUtilities;
+import cn.ismartv.sakura.core.cache.CacheLoader;
+import cn.ismartv.sakura.provider.NodeCache;
 import cn.ismartv.sakura.ui.adapter.NodeListAdapter;
 
 import java.util.HashMap;
@@ -20,16 +25,11 @@ import java.util.List;
 /**
  * Created by fenghb on 14-6-25.
  */
-public class NodeFragment extends Fragment implements AdapterView.OnItemClickListener {
+public class NodeFragment extends Fragment implements AdapterView.OnItemClickListener, LoaderManager.LoaderCallbacks<Cursor> {
 
     private GridView nodes;
     private List<HashMap<String, String>> list;
 
-    public static final int TEST_COMPLETE = 0x0001;
-    public static final int GET_NODE_LIST = 0x0002;
-    public static final int GET_NODE_LIST_COMPLETE = 0x0003;
-    public static final int CONNECTION_REFUSED = 0x0004;
-    public static final int SPEEDTEST_COMPLETE = 0x0005;
 
     public static Handler messageHandler;
 
@@ -38,8 +38,13 @@ public class NodeFragment extends Fragment implements AdapterView.OnItemClickLis
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        messageHandler = new MessageHandler();
-        messageHandler.sendEmptyMessage(GET_NODE_LIST);     //get node list from server
+        nodeListAdapter = new NodeListAdapter(getActivity(), null, true);
+        initLoader();
+    }
+
+    //init loader
+    private void initLoader() {
+        getLoaderManager().initLoader(0, null, this);
     }
 
     @Override
@@ -51,27 +56,37 @@ public class NodeFragment extends Fragment implements AdapterView.OnItemClickLis
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         nodes = (GridView) view.findViewById(R.id.node_list_view);
+        nodes.setAdapter(nodeListAdapter);
     }
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+
     }
 
+    //loader
+    @Override
+    public Loader onCreateLoader(int id, Bundle bundle) {
+        return new CacheLoader(getActivity(), NodeCache.CONTENT_URI,
+                new String[]{NodeCache.ID, NodeCache.NICK},
+                null, null, null);
+    }
+
+    @Override
+    public void onLoadFinished(Loader<Cursor> cursorLoader, Cursor cursor) {
+        nodeListAdapter.swapCursor(cursor);
+    }
+
+    @Override
+    public void onLoaderReset(Loader loader) {
+        nodeListAdapter.swapCursor(null);
+    }
+
+    //------------------------------------------------------------
     private class MessageHandler extends Handler {
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what) {
-                case TEST_COMPLETE:
-                    break;
-                case GET_NODE_LIST:
-                    break;
-                case GET_NODE_LIST_COMPLETE:
-                    break;
-                case CONNECTION_REFUSED:
-                    Toast.makeText(getActivity(), R.string.connect_refused, Toast.LENGTH_LONG).show();
-                    break;
-                case SPEEDTEST_COMPLETE:
-                    break;
                 default:
                     break;
             }
