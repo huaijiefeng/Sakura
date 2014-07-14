@@ -22,7 +22,6 @@ public class HttpDownload {
 
     public native List<Map<String, String>> multiDownloadForSingleThread(List<Map<String, String>> list);
 
-
     public void download(Context context, List<Node> nodes) {
         Log.d(TAG, "download method is executing......");
         ExecutorService executor = Executors.newSingleThreadExecutor();

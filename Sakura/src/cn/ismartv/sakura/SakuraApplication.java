@@ -2,6 +2,7 @@ package cn.ismartv.sakura;
 
 import android.app.Application;
 import android.util.Log;
+import cn.ismartv.sakura.utils.DevicesUtilities;
 
 /**
  * Created by fenghb on 14-7-7.
@@ -13,6 +14,7 @@ public class SakuraApplication extends Application {
     public void onCreate() {
         super.onCreate();
         Log.d(TAG, "on create ......");
+        Log.d(TAG, DevicesUtilities.getSNCode());
 
         SakuraInitialization initialization = new SakuraInitialization(getApplicationContext());
         initialization.start();

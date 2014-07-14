@@ -37,6 +37,7 @@ public class DevicesUtilities {
     }
 
     public static String getSNCode() {
-        return android.os.Build.SERIAL;
+        String sn = android.os.Build.SERIAL;
+        return sn.equals("unknown") ? "1" : sn;
     }
 }

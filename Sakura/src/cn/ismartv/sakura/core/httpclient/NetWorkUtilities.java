@@ -71,4 +71,7 @@ public class NetWorkUtilities {
         Log.d(TAG, "get node tag is end...");
         return httpData.getCdn_list();
     }
+
+
+
 }

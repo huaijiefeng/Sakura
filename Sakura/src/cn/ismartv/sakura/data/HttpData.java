@@ -15,4 +15,8 @@ public class HttpData {
     }
 
     private ArrayList<Node> cdn_list;
+
+
+    private String retcode;
+    private String retmsg;
 }
