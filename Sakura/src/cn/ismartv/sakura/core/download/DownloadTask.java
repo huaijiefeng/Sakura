@@ -1,7 +1,7 @@
 package cn.ismartv.sakura.core.download;
 
 import android.util.Log;
-import cn.ismartv.sakura.data.Nodes;
+import cn.ismartv.sakura.data.Node;
 import cn.ismartv.sakura.utils.DevicesUtilities;
 
 import java.io.*;
@@ -13,22 +13,22 @@ import java.util.concurrent.Callable;
 /**
  * Created by fenghb on 14-7-2.
  */
-public class DownloadTask implements Callable<Nodes.Node> {
+public class DownloadTask implements Callable<Node> {
     private static final String TAG = "DownloadTask";
     private static final String SUFFIX = ".ismartv";
 
     private static final int TIME_OVER = 4;
 
-    private Nodes.Node node;
+    private Node node;
 
-    private  long timer;
+    private long timer;
 
-    public DownloadTask(Nodes.Node node, long maxTime, long maxSpeed) {
+    public DownloadTask(Node node, long maxTime, long maxSpeed) {
         this.node = node;
     }
 
     @Override
-    public Nodes.Node call() {
+    public Node call() {
         Log.d(TAG, "call is running......");
         new Timer().start();
         int bytesum = 0;

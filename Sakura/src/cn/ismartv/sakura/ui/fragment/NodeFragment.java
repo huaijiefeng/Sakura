@@ -9,14 +9,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.ListView;
 import android.widget.Toast;
 import cn.ismartv.sakura.R;
 import cn.ismartv.sakura.core.httpclient.NetWorkUtilities;
-import cn.ismartv.sakura.data.Nodes;
 import cn.ismartv.sakura.ui.adapter.NodeListAdapter;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -67,18 +64,13 @@ public class NodeFragment extends Fragment implements AdapterView.OnItemClickLis
                 case TEST_COMPLETE:
                     break;
                 case GET_NODE_LIST:
-                    NetWorkUtilities.getTag();
                     break;
                 case GET_NODE_LIST_COMPLETE:
-                    nodeListAdapter = new NodeListAdapter(getActivity(), (Nodes) msg.obj);
-                    nodes.setAdapter(nodeListAdapter);
                     break;
                 case CONNECTION_REFUSED:
                     Toast.makeText(getActivity(), R.string.connect_refused, Toast.LENGTH_LONG).show();
                     break;
                 case SPEEDTEST_COMPLETE:
-                    nodeListAdapter.setNodeList((Nodes) msg.obj);
-                    nodeListAdapter.notifyDataSetChanged();
                     break;
                 default:
                     break;

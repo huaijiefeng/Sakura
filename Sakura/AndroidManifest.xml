@@ -27,7 +27,7 @@
             </intent-filter>
         </activity>
 
-        <provider android:name=".provider.Node$Cache" android:authorities="cn.ismartv.sakura"/>
+        <provider android:name=".provider.SakuraProvider" android:authorities="cn.ismartv.sakura"/>
     </application>
 
     <instrumentation

@@ -1,7 +1,7 @@
 package cn.ismartv.sakura.core.download;
 
 import android.util.Log;
-import cn.ismartv.sakura.data.Nodes;
+import cn.ismartv.sakura.data.Node;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,16 +22,14 @@ public class HttpDownload {
     public native List<Map<String, String>> multiDownloadForSingleThread(List<Map<String, String>> list);
 
 
-    public void download(Nodes nodes) {
+    public void download(List<Node> nodes) {
         Log.d(TAG, "download method is executing......");
         ExecutorService executor = Executors.newSingleThreadExecutor();
-        Nodes mNodes = new Nodes();
-        ArrayList<Nodes.Node> arrayList = new ArrayList<Nodes.Node>();
-        for (Nodes.Node node : nodes.getCdn_list()) {
+        ArrayList<Node> arrayList = new ArrayList<Node>();
+        for (Node node : nodes) {
             if (node.getCdnID().equals("6"))
                 continue;
-
-            Future<Nodes.Node> future = executor.submit(new DownloadTask(node, 100, 100));
+            Future<Node> future = executor.submit(new DownloadTask(node, 100, 100));
             try {
                 arrayList.add(future.get());
             } catch (InterruptedException e) {
@@ -40,8 +38,7 @@ public class HttpDownload {
                 e.printStackTrace();
             }
         }
-        mNodes.setCdn_list(arrayList);
-        for (Nodes.Node kk : arrayList) {
+        for (Node kk : arrayList) {
             Log.d(TAG, "name : " + kk.getName());
             Log.d(TAG, "speed : " + kk.getSpeed());
         }

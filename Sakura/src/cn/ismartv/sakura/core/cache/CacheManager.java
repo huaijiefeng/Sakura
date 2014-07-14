@@ -20,11 +20,7 @@ public class CacheManager {
         ContentValues contentValues = new ContentValues();
         for (Node node : nodes) {
             contentValues.put(NodeCache.NODE, node.getName());
-            
             context.getContentResolver().insert(NodeCache.CONTENT_URI, contentValues);
         }
-
     }
-
-
 }
