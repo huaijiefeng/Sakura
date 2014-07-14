@@ -13,7 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.Toast;
 import cn.ismartv.sakura.R;
 import cn.ismartv.sakura.core.cache.CacheLoader;
 import cn.ismartv.sakura.provider.NodeCache;
@@ -68,7 +67,7 @@ public class NodeFragment extends Fragment implements AdapterView.OnItemClickLis
     @Override
     public Loader onCreateLoader(int id, Bundle bundle) {
         return new CacheLoader(getActivity(), NodeCache.CONTENT_URI,
-                new String[]{NodeCache.ID, NodeCache.NICK},
+                new String[]{NodeCache.ID, NodeCache.NICK, NodeCache.SPEED, NodeCache.CHECKED},
                 null, null, null);
     }
 

@@ -44,4 +44,20 @@ public class NodeCache {
             + SPEED + " VARCHAR(255),"
             + CHECKED + " VARCHAR(255),"
             + UPDATE_TIME + " VARCHAR(255))";
+
+
+    static {
+        projectionMap = new HashMap<String, String>();
+        projectionMap.put(ID, ID);
+        projectionMap.put(CDN_ID, CDN_ID);
+        projectionMap.put(NODE, NODE);
+        projectionMap.put(NICK, NICK);
+        projectionMap.put(FLAG, FLAG);
+        projectionMap.put(IP, IP);
+        projectionMap.put(URL, URL);
+        projectionMap.put(ROUTE_TRACE, ROUTE_TRACE);
+        projectionMap.put(SPEED, SPEED);
+        projectionMap.put(CHECKED, CHECKED);
+        projectionMap.put(UPDATE_TIME, UPDATE_TIME);
+    }
 }

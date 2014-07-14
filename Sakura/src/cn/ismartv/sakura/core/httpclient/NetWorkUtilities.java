@@ -1,12 +1,9 @@
 package cn.ismartv.sakura.core.httpclient;
 
-import android.os.Message;
 import android.util.Log;
-import cn.ismartv.sakura.core.download.HttpDownload;
 import cn.ismartv.sakura.data.HttpData;
 import cn.ismartv.sakura.data.Node;
 import cn.ismartv.sakura.data.NodeTag;
-import cn.ismartv.sakura.ui.fragment.NodeFragment;
 import com.google.gson.Gson;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;

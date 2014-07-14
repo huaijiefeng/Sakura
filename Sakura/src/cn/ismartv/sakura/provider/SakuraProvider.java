@@ -71,7 +71,7 @@ public class SakuraProvider extends ContentProvider {
 
         // store the data
         SQLiteDatabase db = dbHelper.getWritableDatabase();
-        long rowId = db.insert(NodeCache.TABLE_NAME, "NULL", v);
+        long rowId = db.insert(NodeCache.TABLE_NAME, " ", v);
         if (rowId > 0) {
             Uri catUri = ContentUris.withAppendedId(uri, rowId);
             getContext().getContentResolver().notifyChange(uri, null);
@@ -86,7 +86,22 @@ public class SakuraProvider extends ContentProvider {
     }
 
     @Override
-    public int update(Uri uri, ContentValues contentValues, String s, String[] strings) {
-        return 0;
+    public int update(Uri uri, ContentValues contentValues, String selection, String[] selectionArgs) {
+        int count = 0;
+        long id = 0;
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        switch (matcher.match(uri)) {
+            case CACHE_ID:
+                id = ContentUris.parseId(uri);
+//                selection = selection == null ? "id = " + id : "id = " + id + " AND " + selection;
+                break;
+            case CACHE:
+                count = db.update(NodeCache.TABLE_NAME, contentValues, selection + " = ?", selectionArgs);
+                break;
+            default:
+                throw new IllegalArgumentException("Unknow uri: " + uri);
+        }
+        getContext().getContentResolver().notifyChange(uri, null);
+        return count;
     }
 }

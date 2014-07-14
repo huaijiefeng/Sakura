@@ -1,5 +1,6 @@
 package cn.ismartv.sakura.core.download;
 
+import android.content.Context;
 import android.util.Log;
 import cn.ismartv.sakura.data.Node;
 
@@ -22,14 +23,14 @@ public class HttpDownload {
     public native List<Map<String, String>> multiDownloadForSingleThread(List<Map<String, String>> list);
 
 
-    public void download(List<Node> nodes) {
+    public void download(Context context, List<Node> nodes) {
         Log.d(TAG, "download method is executing......");
         ExecutorService executor = Executors.newSingleThreadExecutor();
         ArrayList<Node> arrayList = new ArrayList<Node>();
         for (Node node : nodes) {
             if (node.getCdnID().equals("6"))
                 continue;
-            Future<Node> future = executor.submit(new DownloadTask(node, 100, 100));
+            Future<Node> future = executor.submit(new DownloadTask(context, node, 100, 100));
             try {
                 arrayList.add(future.get());
             } catch (InterruptedException e) {

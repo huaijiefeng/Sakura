@@ -10,6 +10,7 @@ import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import cn.ismartv.sakura.R;
+import cn.ismartv.sakura.data.Node;
 import cn.ismartv.sakura.provider.NodeCache;
 
 /**
@@ -37,6 +38,10 @@ public class NodeListAdapter extends CursorAdapter {
         ProgressBar nodeSpeed = (ProgressBar) view.findViewById(R.id.node_speed);
         RadioButton nodeCheck = (RadioButton) view.findViewById(R.id.node_check);
         String node = cursor.getString(cursor.getColumnIndex(NodeCache.NICK));
+        int speed = cursor.getInt(cursor.getColumnIndex(NodeCache.SPEED));
+        String checked = cursor.getString(cursor.getColumnIndex(NodeCache.CHECKED));
         nodeName.setText(node);
+        nodeSpeed.setProgress((int)(speed/20.48));
+        nodeCheck.setChecked(checked.equals("true") ? true : false);
     }
 }

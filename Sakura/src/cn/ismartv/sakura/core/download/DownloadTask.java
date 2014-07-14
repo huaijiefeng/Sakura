@@ -1,6 +1,8 @@
 package cn.ismartv.sakura.core.download;
 
+import android.content.Context;
 import android.util.Log;
+import cn.ismartv.sakura.core.cache.CacheManager;
 import cn.ismartv.sakura.data.Node;
 import cn.ismartv.sakura.utils.DevicesUtilities;
 
@@ -20,10 +22,11 @@ public class DownloadTask implements Callable<Node> {
     private static final int TIME_OVER = 4;
 
     private Node node;
-
     private long timer;
+    private Context context;
 
-    public DownloadTask(Node node, long maxTime, long maxSpeed) {
+    public DownloadTask(Context context, Node node, long maxTime, long maxSpeed) {
+        this.context = context;
         this.node = node;
     }
 
@@ -54,6 +57,8 @@ public class DownloadTask implements Callable<Node> {
             String speed = getKBperSECOND(bytesum, startTime, stopTime);
             Log.d(TAG, "download size is : " + getSize(bytesum) + " speed is : " + speed);
             node.setSpeed(speed);
+            //update node cache
+            CacheManager.updateNodeCache(context, node);
             fs.flush();
             fs.close();
             inStream.close();
