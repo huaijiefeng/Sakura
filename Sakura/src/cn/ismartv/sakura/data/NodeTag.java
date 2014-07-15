@@ -9,7 +9,6 @@ public class NodeTag {
     public boolean isChanged() {
         return changed;
     }
-
     public void setChanged(boolean changed) {
         this.changed = changed;
     }

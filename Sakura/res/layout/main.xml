@@ -6,7 +6,7 @@
                 android:layout_height="match_parent"
         >
     <com.viewpagerindicator.TabPageIndicator
-            android:padding="80dp"
+            android:padding="60dp"
             android:nextFocusDown="@+id/node_check"
             android:id="@+id/indicator"
             android:layout_height="wrap_content"

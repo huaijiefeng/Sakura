@@ -11,7 +11,7 @@ public class HttpClientTest extends AndroidTestCase {
     @Override
     protected void setUp() throws Exception {
         super.setUp();
-        getTag();
+        getBindCdn();
     }
 
     @Override
@@ -25,5 +25,9 @@ public class HttpClientTest extends AndroidTestCase {
 
     private void getTag() {
         NetWorkUtilities.nodeIsChanged();
+    }
+
+    public void getBindCdn() {
+        NetWorkUtilities.getBindcdn();
     }
 }

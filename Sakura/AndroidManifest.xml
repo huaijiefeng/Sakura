@@ -26,6 +26,9 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+        <activity
+                android:theme="@style/Theme.PageIndicatorDefaults"
+                android:name=".ui.activity.HelpDetailActivity"></activity>
 
         <provider android:name=".provider.SakuraProvider" android:authorities="cn.ismartv.sakura"/>
     </application>

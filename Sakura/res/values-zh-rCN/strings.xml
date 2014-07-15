@@ -78,4 +78,8 @@
     <string name="cs_email_string">kf@ismartv.cn</string>
     <string name="cs_weibo_string">视云影院</string>
     <string name="speed_test">测速</string>
+    <string name="city">城市:</string>
+    <string name="operator">运营商:</string>
+    <string name="list">列表:</string>
+    <string name="test">测速</string>
 </resources>

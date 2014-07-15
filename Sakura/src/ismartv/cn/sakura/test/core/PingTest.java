@@ -60,8 +60,6 @@ public class PingTest extends AndroidTestCase {
                 e.printStackTrace();
             }
             Log.d(TAG, result);
-
-
         } else {
             Log.e(TAG, response.getStatusLine().toString());
         }

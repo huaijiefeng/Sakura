@@ -43,4 +43,10 @@ public class CacheManager {
             context.getContentResolver().insert(NodeCache.CONTENT_URI, contentValues);
         }
     }
+
+    public static void updateCheck(Context context, String cndID) {
+        ContentValues contentValues = new ContentValues();
+
+
+    }
 }

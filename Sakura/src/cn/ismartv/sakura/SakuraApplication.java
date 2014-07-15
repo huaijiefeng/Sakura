@@ -2,6 +2,7 @@ package cn.ismartv.sakura;
 
 import android.app.Application;
 import android.util.Log;
+import cn.ismartv.sakura.core.httpclient.NetWorkUtilities;
 import cn.ismartv.sakura.utils.DevicesUtilities;
 
 /**
@@ -15,8 +16,10 @@ public class SakuraApplication extends Application {
         super.onCreate();
         Log.d(TAG, "on create ......");
         Log.d(TAG, DevicesUtilities.getSNCode());
+        NetWorkUtilities.bindCdn("5");
 
-        SakuraInitialization initialization = new SakuraInitialization(getApplicationContext());
-        initialization.start();
+        NetWorkUtilities.getBindcdn();
+//        SakuraInitialization initialization = new SakuraInitialization(getApplicationContext());
+//        initialization.start();
     }
 }

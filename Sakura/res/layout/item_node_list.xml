@@ -46,20 +46,21 @@
                 android:layout_width="match_parent"
                 android:layout_below="@id/node_name"
                 android:progressDrawable="@drawable/progressbar"
+                android:layout_marginRight="40dp"
                 android:layout_height="wrap_content"/>
     </LinearLayout>
 
 
-    <Button
-            android:layout_marginLeft="20dp"
-            android:layout_centerVertical="true"
-            android:layout_width="0dp"
-            android:layout_weight="2"
-            android:text="@string/speed_test"
-            android:layout_marginRight="10dp"
-            android:textColor="#bbffffff"
-            android:textSize="20sp"
-            android:layout_height="40dp"/>
+    <!--<Button-->
+    <!--android:layout_marginLeft="20dp"-->
+    <!--android:layout_centerVertical="true"-->
+    <!--android:layout_width="0dp"-->
+    <!--android:layout_weight="2"-->
+    <!--android:text="@string/speed_test"-->
+    <!--android:layout_marginRight="10dp"-->
+    <!--android:textColor="#bbffffff"-->
+    <!--android:textSize="20sp"-->
+    <!--android:layout_height="40dp"/>-->
 
     <!--android:background="#aa0099cc"-->
 

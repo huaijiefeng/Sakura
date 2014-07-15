@@ -4,6 +4,7 @@ import android.util.Log;
 import cn.ismartv.sakura.data.HttpData;
 import cn.ismartv.sakura.data.Node;
 import cn.ismartv.sakura.data.NodeTag;
+import cn.ismartv.sakura.utils.DevicesUtilities;
 import com.google.gson.Gson;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -36,7 +37,6 @@ public class NetWorkUtilities {
             if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
                 HttpEntity entity = response.getEntity();
                 result = EntityUtils.toString(entity);
-
                 Log.d(TAG, result);
             } else {
                 Log.e(TAG, response.getStatusLine().toString());
@@ -72,6 +72,59 @@ public class NetWorkUtilities {
         return httpData.getCdn_list();
     }
 
+    public static void getBindcdn() {
+        new Thread() {
+            @Override
+            public void run() {
+                Log.d(TAG, "get bind cdn is running...");
+                HttpClient client = new DefaultHttpClient();
+                HttpGet get = new HttpGet(HOST + GET_NODE_URL + "?actiontype=getBindcdn&sn=" +
+                        DevicesUtilities.getSNCode());
+                HttpResponse response;
+                String result = null;
+                try {
+                    response = client.execute(get);
+                    if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
+                        HttpEntity entity = response.getEntity();
+                        result = EntityUtils.toString(entity);
+                        Log.d(TAG, result);
+                    } else {
+                        Log.e(TAG, response.getStatusLine().toString());
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                HttpData httpBindcdn = new Gson().fromJson(result, HttpData.class);
+                Log.d(TAG, "get bind cdn is end...");
+            }
+        }.start();
+    }
 
-
+    public static void bindCdn(final String cdn) {
+        new Thread() {
+            @Override
+            public void run() {
+                Log.d(TAG, "get bind cdn is running...");
+                HttpClient client = new DefaultHttpClient();
+                HttpGet get = new HttpGet(HOST + GET_NODE_URL + "?actiontype=bindecdn&sn=" +
+                        DevicesUtilities.getSNCode() + "&cdn=" + cdn);
+                HttpResponse response;
+                String result = null;
+                try {
+                    response = client.execute(get);
+                    if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
+                        HttpEntity entity = response.getEntity();
+                        result = EntityUtils.toString(entity);
+                        Log.d(TAG, result);
+                    } else {
+                        Log.e(TAG, response.getStatusLine().toString());
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                HttpData httpBindcdn = new Gson().fromJson(result, HttpData.class);
+                Log.d(TAG, "get bind cdn is end...");
+            }
+        }.start();
+    }
 }

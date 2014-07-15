@@ -11,7 +11,6 @@ public class Node {
     private String url;
     private String ping;
 
-
     private String nick;
 
     public String getPing() {

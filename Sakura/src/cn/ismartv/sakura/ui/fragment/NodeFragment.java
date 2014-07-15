@@ -12,7 +12,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.GridView;
+import android.widget.Spinner;
 import cn.ismartv.sakura.R;
 import cn.ismartv.sakura.core.cache.CacheLoader;
 import cn.ismartv.sakura.provider.NodeCache;
@@ -25,9 +27,11 @@ import java.util.List;
  * Created by fenghb on 14-6-25.
  */
 public class NodeFragment extends Fragment implements AdapterView.OnItemClickListener, LoaderManager.LoaderCallbacks<Cursor> {
-
     private GridView nodes;
     private List<HashMap<String, String>> list;
+    private Spinner citySpinner;
+    private Spinner operatorSpinner;
+    private Spinner listSpinner;
 
 
     public static Handler messageHandler;
@@ -54,6 +58,26 @@ public class NodeFragment extends Fragment implements AdapterView.OnItemClickLis
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        //city
+        citySpinner = (Spinner) view.findViewById(R.id.city);
+        ArrayAdapter<CharSequence> citySpinnerAdapter = ArrayAdapter.createFromResource(getActivity(),
+                R.array.citys, android.R.layout.simple_spinner_item);
+        citySpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        citySpinner.setAdapter(citySpinnerAdapter);
+        //operator
+        operatorSpinner = (Spinner) view.findViewById(R.id.operator);
+        ArrayAdapter<CharSequence> operatorSpinnerAdapter = ArrayAdapter.createFromResource(getActivity(),
+                R.array.operators, android.R.layout.simple_spinner_item);
+        operatorSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        operatorSpinner.setAdapter(operatorSpinnerAdapter);
+        //list
+        listSpinner = (Spinner) view.findViewById(R.id.list);
+        ArrayAdapter<CharSequence> listSpinnerAdapter = ArrayAdapter.createFromResource(getActivity(),
+                R.array.lists, android.R.layout.simple_spinner_item);
+        listSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        listSpinner.setAdapter(listSpinnerAdapter);
+
+
         nodes = (GridView) view.findViewById(R.id.node_list_view);
         nodes.setAdapter(nodeListAdapter);
     }
