@@ -36,4 +36,11 @@ public class SakuraInitialization extends Thread {
         HttpDownload httpDownload = new HttpDownload();
         httpDownload.download(context, nodes);
     }
+
+    private void initLocalCityDatabase() {
+
+
+    }
+
+
 }

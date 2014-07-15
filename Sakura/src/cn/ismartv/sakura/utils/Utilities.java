@@ -6,4 +6,5 @@ package cn.ismartv.sakura.utils;
 public class Utilities {
 
 
+
 }

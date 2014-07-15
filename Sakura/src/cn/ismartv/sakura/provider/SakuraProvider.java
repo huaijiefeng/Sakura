@@ -21,14 +21,16 @@ public class SakuraProvider extends ContentProvider {
 
     private static final int CACHE = 1;
     private static final int CACHE_ID = 2;
-
+    private static final int CITY_CACHE = 3;
+    private static final int CITY_CACHE_ID = 4;
 
     static {
         matcher = new UriMatcher(UriMatcher.NO_MATCH);
         matcher.addURI(AUTHORITY, NodeCache.TABLE_NAME, CACHE);
         matcher.addURI(AUTHORITY, NodeCache.TABLE_NAME + "/#", CACHE_ID);
+        matcher.addURI(AUTHORITY, CityCache.TABLE_NAME, CITY_CACHE);
+        matcher.addURI(AUTHORITY, CityCache.TABLE_NAME + "/#", CITY_CACHE_ID);
     }
-
 
     @Override
     public boolean onCreate() {
@@ -40,8 +42,18 @@ public class SakuraProvider extends ContentProvider {
     public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
         SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
         SQLiteDatabase db = dbHelper.getReadableDatabase();
-        qb.setTables(NodeCache.TABLE_NAME);
-        qb.setProjectionMap(NodeCache.projectionMap);
+        switch (matcher.match(uri)) {
+            case CACHE:
+                qb.setTables(NodeCache.TABLE_NAME);
+                qb.setProjectionMap(NodeCache.projectionMap);
+                break;
+            case CITY_CACHE:
+                qb.setTables(CityCache.TABLE_NAME);
+                qb.setProjectionMap(CityCache.projectionMap);
+                break;
+            default:
+                throw new IllegalArgumentException("Unknow uri: " + uri);
+        }
         Cursor cursor = qb.query(db, projection, selection, selectionArgs, null, null, sortOrder);
         cursor.setNotificationUri(getContext().getContentResolver(), uri);
         return cursor;
@@ -54,8 +66,13 @@ public class SakuraProvider extends ContentProvider {
 
     @Override
     public Uri insert(Uri uri, ContentValues contentValues) {
+        String tableName;
         switch (matcher.match(uri)) {
             case CACHE:
+                tableName = NodeCache.TABLE_NAME;
+                break;
+            case CITY_CACHE:
+                tableName = CityCache.TABLE_NAME;
                 break;
             default:
                 throw new IllegalArgumentException("Unknow uri: " + uri);
@@ -71,7 +88,7 @@ public class SakuraProvider extends ContentProvider {
 
         // store the data
         SQLiteDatabase db = dbHelper.getWritableDatabase();
-        long rowId = db.insert(NodeCache.TABLE_NAME, " ", v);
+        long rowId = db.insert(tableName, "NULL", v);
         if (rowId > 0) {
             Uri catUri = ContentUris.withAppendedId(uri, rowId);
             getContext().getContentResolver().notifyChange(uri, null);
@@ -103,5 +120,28 @@ public class SakuraProvider extends ContentProvider {
         }
         getContext().getContentResolver().notifyChange(uri, null);
         return count;
+    }
+
+    @Override
+    public int bulkInsert(Uri uri, ContentValues[] values) {
+        int length = values.length;
+        if (length < 10) {
+            for (ContentValues contentValues : values) {
+                insert(uri, contentValues);
+            }
+            return length;
+        } else {
+            SQLiteDatabase db = dbHelper.getWritableDatabase();
+            db.beginTransaction();
+            switch (matcher.match(uri)) {
+                case CACHE:
+                    break;
+                case CITY_CACHE:
+                    break;
+                default:
+                    throw new IllegalArgumentException("Unknow uri: " + uri);
+            }
+        }
+        return 0;
     }
 }
