@@ -154,7 +154,7 @@ public class NodeFragment extends Fragment implements AdapterView.OnItemClickLis
     //On Item Selected Listener
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
-//        Log.d("dd", "view id is : " + view.getId() + "---" + adapterView.getId() + "-----" + id);
+        Log.d("dd", "view id is : " + view.getId() + "---" + adapterView.getId() + "-----" + id);
         String[] cities = getResources().getStringArray(R.array.citys);
         switch (adapterView.getId()) {
             case 2130968611:
@@ -202,7 +202,10 @@ public class NodeFragment extends Fragment implements AdapterView.OnItemClickLis
 
 
     private void speedTest() {
-        new DownloadTask(getActivity(), nodeListAdapter.getCursor()).start();
+        DownloadTask downloadTask = new DownloadTask(getActivity(), nodeListAdapter.getCursor());
+        if (!downloadTask.isAlive()) {
+            downloadTask.start();
+        }
     }
 
     private class MessageHandler extends Handler {

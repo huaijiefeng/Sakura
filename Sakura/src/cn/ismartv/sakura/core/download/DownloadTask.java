@@ -25,31 +25,33 @@ public class DownloadTask extends Thread {
 
     private static final int TIME_OVER = 4;
 
-    private long timer;
     private Context context;
     private Cursor cursor;
 
     private List<Map<String, String>> nodes;
 
+
+
     public DownloadTask(Context context, Cursor cursor) {
         this.context = context;
         this.cursor = cursor;
         nodes = new ArrayList<Map<String, String>>();
-        while (cursor.moveToNext()) {
+        for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
             Map<String, String> map = new HashMap<String, String>();
             map.put("cdn_id", cursor.getString(cursor.getColumnIndex(NodeCache.CDN_ID)));
             map.put("url", cursor.getString(cursor.getColumnIndex(NodeCache.URL)));
             nodes.add(map);
         }
-        cursor.close();
     }
+
 
 
     @Override
     public void run() {
         for (Map<String, String> map : nodes) {
             Log.d(TAG, "call is running......");
-            new Timer().start();
+            Timer timer = new Timer();
+            timer.start();
             int bytesum = 0;
             int byteread;
 
@@ -65,7 +67,7 @@ public class DownloadTask extends Thread {
                 InputStream inStream = conn.getInputStream();
                 FileOutputStream fs = new FileOutputStream(fileName);
                 byte[] buffer = new byte[1024];
-                while ((byteread = inStream.read(buffer)) != -1 && timer < TIME_OVER) {
+                while ((byteread = inStream.read(buffer)) != -1 && timer.timer < TIME_OVER) {
                     bytesum += byteread;
 //                Log.d(TAG, getSize(bytesum) + " time : " + timer);
                     fs.write(buffer, 0, byteread);
@@ -90,6 +92,8 @@ public class DownloadTask extends Thread {
 
 
     class Timer extends Thread {
+        private long timer;
+
         @Override
         public void run() {
             while (timer <= TIME_OVER) {

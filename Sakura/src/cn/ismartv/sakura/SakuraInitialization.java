@@ -1,6 +1,7 @@
 package cn.ismartv.sakura;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
 import cn.ismartv.sakura.core.cache.CacheManager;
 import cn.ismartv.sakura.core.httpclient.NetWorkUtilities;
@@ -24,14 +25,32 @@ public class SakuraInitialization extends Thread {
         Log.d(TAG, "thread is running......");
         ArrayList<Node> nodes;
         if (NetWorkUtilities.nodeIsChanged()) {
-            nodes = NetWorkUtilities.getNodeList();
-            CacheManager.updateNodeCache(context, nodes);
+            if (isFirstInstall()) {
+                nodes = NetWorkUtilities.getNodeList();
+
+                CacheManager.updateNodeCache(context, nodes);
+            }
         } else {
-            nodes = NetWorkUtilities.getNodeList();
-            CacheManager.updateNodeCache(context, nodes);
+            if (isFirstInstall()) {
+                nodes = NetWorkUtilities.getNodeList();
+
+                CacheManager.updateNodeCache(context, nodes);
+            }
         }
     }
 
+    private boolean isFirstInstall() {
+        SharedPreferences preferences = context.getSharedPreferences("sakura", Context.MODE_PRIVATE);
+
+        if (preferences.getBoolean("first_install", true)) {
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putBoolean("first_install", false);
+            editor.apply();
+            return true;
+        }
+        return false;
+
+    }
 
 
 }
