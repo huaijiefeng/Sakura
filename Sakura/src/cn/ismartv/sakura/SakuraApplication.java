@@ -19,7 +19,7 @@ public class SakuraApplication extends Application {
         NetWorkUtilities.bindCdn("5");
 
         NetWorkUtilities.getBindcdn();
-//        SakuraInitialization initialization = new SakuraInitialization(getApplicationContext());
-//        initialization.start();
+        SakuraInitialization initialization = new SakuraInitialization(getApplicationContext());
+        initialization.start();
     }
 }

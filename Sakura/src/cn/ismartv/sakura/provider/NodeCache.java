@@ -19,6 +19,8 @@ public class NodeCache {
     public static final String NODE = "node";
     public static final String NICK = "nick";
     public static final String FLAG = "flag";
+    public static final String AREA = "area";
+    public static final String OPERATOR = "operator";
     public static final String IP = "ip";
     public static final String URL = "url";
     public static final String ROUTE_TRACE = "route_trace";
@@ -38,6 +40,8 @@ public class NodeCache {
             + NODE + " VARCHAR(255),"
             + NICK + " VARCHAR(255),"
             + FLAG + " VARCHAR(255),"
+            + AREA + " INTEGER,"
+            + OPERATOR + " INTEGER,"
             + IP + " VARCHAR(255),"
             + URL + " VARCHAR(255),"
             + ROUTE_TRACE + " VARCHAR(255),"
@@ -53,6 +57,8 @@ public class NodeCache {
         projectionMap.put(NODE, NODE);
         projectionMap.put(NICK, NICK);
         projectionMap.put(FLAG, FLAG);
+        projectionMap.put(AREA, AREA);
+        projectionMap.put(OPERATOR, OPERATOR);
         projectionMap.put(IP, IP);
         projectionMap.put(URL, URL);
         projectionMap.put(ROUTE_TRACE, ROUTE_TRACE);

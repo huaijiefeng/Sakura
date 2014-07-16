@@ -50,7 +50,7 @@ public class DownloadTask implements Callable<Node> {
             byte[] buffer = new byte[1024];
             while ((byteread = inStream.read(buffer)) != -1 && timer < TIME_OVER) {
                 bytesum += byteread;
-                Log.d(TAG, getSize(bytesum) + " time : " + timer);
+//                Log.d(TAG, getSize(bytesum) + " time : " + timer);
                 fs.write(buffer, 0, byteread);
             }
             long stopTime = System.currentTimeMillis();
@@ -63,7 +63,7 @@ public class DownloadTask implements Callable<Node> {
             fs.close();
             inStream.close();
         } catch (FileNotFoundException e) {
-            return node;
+            e.printStackTrace();
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (IOException e) {

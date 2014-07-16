@@ -5,6 +5,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import cn.ismartv.sakura.data.Node;
 import cn.ismartv.sakura.provider.NodeCache;
+import cn.ismartv.sakura.utils.StringUtilities;
 
 import java.util.ArrayList;
 
@@ -39,6 +40,8 @@ public class CacheManager {
             contentValues.put(NodeCache.ROUTE_TRACE, node.getRoute_trace());
             contentValues.put(NodeCache.SPEED, node.getSpeed());
             contentValues.put(NodeCache.UPDATE_TIME, System.currentTimeMillis());
+            contentValues.put(NodeCache.AREA, StringUtilities.getAreaCodeByNode(node.getNick()));
+            contentValues.put(NodeCache.OPERATOR, StringUtilities.getOperatorByNode(node.getNick()));
             contentValues.put(NodeCache.CHECKED, "true");
             context.getContentResolver().insert(NodeCache.CONTENT_URI, contentValues);
         }
