@@ -15,7 +15,7 @@ import android.view.ViewGroup;
 import android.widget.*;
 import cn.ismartv.sakura.R;
 import cn.ismartv.sakura.core.cache.CacheLoader;
-import cn.ismartv.sakura.core.download.HttpDownload;
+import cn.ismartv.sakura.core.download.DownloadTask;
 import cn.ismartv.sakura.provider.NodeCache;
 import cn.ismartv.sakura.ui.adapter.NodeListAdapter;
 import cn.ismartv.sakura.utils.StringUtilities;
@@ -154,7 +154,7 @@ public class NodeFragment extends Fragment implements AdapterView.OnItemClickLis
     //On Item Selected Listener
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
-        Log.d("dd", "view id is : " + view.getId() + "---" + adapterView.getId() + "-----" + id);
+//        Log.d("dd", "view id is : " + view.getId() + "---" + adapterView.getId() + "-----" + id);
         String[] cities = getResources().getStringArray(R.array.citys);
         switch (adapterView.getId()) {
             case 2130968611:
@@ -202,9 +202,7 @@ public class NodeFragment extends Fragment implements AdapterView.OnItemClickLis
 
 
     private void speedTest() {
-        Cursor cursor = nodeListAdapter.getCursor();
-        HttpDownload httpDownload = new HttpDownload();
-        httpDownload.download(getActivity(), Utilities.cursorToList(cursor));
+        new DownloadTask(getActivity(), nodeListAdapter.getCursor()).start();
     }
 
     private class MessageHandler extends Handler {

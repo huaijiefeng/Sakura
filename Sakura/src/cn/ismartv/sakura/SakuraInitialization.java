@@ -3,8 +3,6 @@ package cn.ismartv.sakura;
 import android.content.Context;
 import android.util.Log;
 import cn.ismartv.sakura.core.cache.CacheManager;
-import cn.ismartv.sakura.core.download.DownloadTask;
-import cn.ismartv.sakura.core.download.HttpDownload;
 import cn.ismartv.sakura.core.httpclient.NetWorkUtilities;
 import cn.ismartv.sakura.data.Node;
 
@@ -32,15 +30,8 @@ public class SakuraInitialization extends Thread {
             nodes = NetWorkUtilities.getNodeList();
             CacheManager.updateNodeCache(context, nodes);
         }
-
-        HttpDownload httpDownload = new HttpDownload();
-        httpDownload.download(context, nodes);
     }
 
-    private void initLocalCityDatabase() {
-
-
-    }
 
 
 }
