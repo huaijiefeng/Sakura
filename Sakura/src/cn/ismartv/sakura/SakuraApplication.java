@@ -18,7 +18,6 @@ public class SakuraApplication extends Application {
         Log.d(TAG, DevicesUtilities.getSNCode());
         NetWorkUtilities.bindCdn("5");
 
-        NetWorkUtilities.getBindcdn();
         SakuraInitialization initialization = new SakuraInitialization(getApplicationContext());
         initialization.start();
     }

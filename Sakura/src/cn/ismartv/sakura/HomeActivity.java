@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import cn.ismartv.sakura.core.httpclient.NetWorkUtilities;
 import cn.ismartv.sakura.ui.fragment.FeedbackFragment;
 import cn.ismartv.sakura.ui.fragment.HelpFragment;
 import cn.ismartv.sakura.ui.fragment.NodeFragment;

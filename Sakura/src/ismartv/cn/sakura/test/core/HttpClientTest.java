@@ -11,7 +11,7 @@ public class HttpClientTest extends AndroidTestCase {
     @Override
     protected void setUp() throws Exception {
         super.setUp();
-        getBindCdn();
+        bindCdn();
     }
 
     @Override
@@ -28,6 +28,12 @@ public class HttpClientTest extends AndroidTestCase {
     }
 
     public void getBindCdn() {
-        NetWorkUtilities.getBindcdn();
+        NetWorkUtilities.getBindcdn(getContext());
     }
+
+    public void bindCdn()
+    {
+        NetWorkUtilities.bindCdn("11");
+    }
+
 }

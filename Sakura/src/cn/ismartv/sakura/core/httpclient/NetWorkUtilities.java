@@ -1,6 +1,8 @@
 package cn.ismartv.sakura.core.httpclient;
 
+import android.content.Context;
 import android.util.Log;
+import cn.ismartv.sakura.core.cache.CacheManager;
 import cn.ismartv.sakura.data.HttpData;
 import cn.ismartv.sakura.data.Node;
 import cn.ismartv.sakura.data.NodeTag;
@@ -72,7 +74,7 @@ public class NetWorkUtilities {
         return httpData.getCdn_list();
     }
 
-    public static void getBindcdn() {
+    public static void getBindcdn(final Context context) {
         new Thread() {
             @Override
             public void run() {
@@ -95,6 +97,7 @@ public class NetWorkUtilities {
                     e.printStackTrace();
                 }
                 HttpData httpBindcdn = new Gson().fromJson(result, HttpData.class);
+                CacheManager.updateCheck(context, httpBindcdn.getSncdn().getCdnid(), "true");
                 Log.d(TAG, "get bind cdn is end...");
             }
         }.start();

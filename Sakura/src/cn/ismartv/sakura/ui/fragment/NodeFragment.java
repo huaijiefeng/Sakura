@@ -1,6 +1,5 @@
 package cn.ismartv.sakura.ui.fragment;
 
-import android.content.Context;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Handler;
@@ -8,7 +7,6 @@ import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +17,6 @@ import cn.ismartv.sakura.core.download.DownloadTask;
 import cn.ismartv.sakura.provider.NodeCache;
 import cn.ismartv.sakura.ui.adapter.NodeListAdapter;
 import cn.ismartv.sakura.utils.StringUtilities;
-import cn.ismartv.sakura.utils.Utilities;
 
 import java.util.HashMap;
 import java.util.List;
@@ -35,6 +32,7 @@ public class NodeFragment extends Fragment implements AdapterView.OnItemClickLis
     private Spinner operatorSpinner;
     private Spinner listSpinner;
     private Button speedTestBtn;
+    private TextView currentNode;
 
     public static Handler messageHandler;
 
@@ -94,8 +92,20 @@ public class NodeFragment extends Fragment implements AdapterView.OnItemClickLis
         speedTestBtn = (Button) view.findViewById(R.id.speed_test_btn);
         speedTestBtn.setOnClickListener(this);
 
+        //current node
+        currentNode = (TextView) view.findViewById(R.id.current_node_text);
+        Cursor cursor = getActivity().getContentResolver().query(NodeCache.CONTENT_URI,
+                new String[]{NodeCache.NICK}, NodeCache.CHECKED + "=?", new String[]{"true"}, null);
+        cursor.moveToFirst();
+        currentNode.setText(cursor.getString(cursor.getColumnIndex(NodeCache.NICK)));
+
+        cursor.close();
+
+
         nodes = (GridView) view.findViewById(R.id.node_list_view);
         nodes.setAdapter(nodeListAdapter);
+
+
     }
 
     @Override
@@ -154,7 +164,7 @@ public class NodeFragment extends Fragment implements AdapterView.OnItemClickLis
     //On Item Selected Listener
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
-        Log.d("dd", "view id is : " + view.getId() + "---" + adapterView.getId() + "-----" + id);
+//        Log.d("dd", "view id is : " + view.getId() + "---" + adapterView.getId() + "-----" + id);
         String[] cities = getResources().getStringArray(R.array.citys);
         switch (adapterView.getId()) {
             case 2130968611:

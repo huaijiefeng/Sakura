@@ -17,6 +17,8 @@ import cn.ismartv.sakura.provider.NodeCache;
  * Created by fenghb on 14-6-24.
  */
 public class NodeListAdapter extends CursorAdapter {
+
+
     public NodeListAdapter(Context context, Cursor c, boolean autoRequery) {
         super(context, c, autoRequery);
     }
@@ -41,7 +43,9 @@ public class NodeListAdapter extends CursorAdapter {
         int speed = cursor.getInt(cursor.getColumnIndex(NodeCache.SPEED));
         String checked = cursor.getString(cursor.getColumnIndex(NodeCache.CHECKED));
         nodeName.setText(node);
-        nodeSpeed.setProgress((int)(speed/20.48));
+        nodeSpeed.setProgress((int) (speed / 20.48));
         nodeCheck.setChecked(checked.equals("true") ? true : false);
     }
+
+
 }

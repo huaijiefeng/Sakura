@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <string name="app_name">网络测速</string>
     <string name="net_speedtester">网络测速</string>
     <string name="setting">网络与蓝牙&gt;</string>
@@ -82,4 +81,5 @@
     <string name="operator">运营商:</string>
     <string name="list">列表:</string>
     <string name="test">测速</string>
+    <string name="current_node">当前节点:</string>
 </resources>

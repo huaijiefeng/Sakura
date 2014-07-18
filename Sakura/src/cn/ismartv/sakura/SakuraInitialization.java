@@ -27,16 +27,17 @@ public class SakuraInitialization extends Thread {
         if (NetWorkUtilities.nodeIsChanged()) {
             if (isFirstInstall()) {
                 nodes = NetWorkUtilities.getNodeList();
-
                 CacheManager.updateNodeCache(context, nodes);
             }
         } else {
             if (isFirstInstall()) {
                 nodes = NetWorkUtilities.getNodeList();
-
                 CacheManager.updateNodeCache(context, nodes);
             }
         }
+
+        NetWorkUtilities.getBindcdn(context);
+
     }
 
     private boolean isFirstInstall() {
@@ -49,7 +50,6 @@ public class SakuraInitialization extends Thread {
             return true;
         }
         return false;
-
     }
 
 

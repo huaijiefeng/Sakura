@@ -31,7 +31,6 @@ public class DownloadTask extends Thread {
     private List<Map<String, String>> nodes;
 
 
-
     public DownloadTask(Context context, Cursor cursor) {
         this.context = context;
         this.cursor = cursor;
@@ -43,8 +42,6 @@ public class DownloadTask extends Thread {
             nodes.add(map);
         }
     }
-
-
 
     @Override
     public void run() {
@@ -90,7 +87,6 @@ public class DownloadTask extends Thread {
         }
     }
 
-
     class Timer extends Thread {
         private long timer;
 
@@ -105,7 +101,6 @@ public class DownloadTask extends Thread {
                 }
             }
         }
-
     }
 
     // calculate download speed
