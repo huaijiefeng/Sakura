@@ -7,6 +7,7 @@ import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +27,8 @@ import java.util.List;
  */
 public class NodeFragment extends Fragment implements AdapterView.OnItemClickListener,
         LoaderManager.LoaderCallbacks<Cursor>, AdapterView.OnItemSelectedListener, View.OnClickListener {
+    private static final String TAG = "NodeFragment";
+
     //view
     private GridView nodes;
     private Spinner citySpinner;
@@ -98,9 +101,9 @@ public class NodeFragment extends Fragment implements AdapterView.OnItemClickLis
                 new String[]{NodeCache.NICK}, NodeCache.CHECKED + "=?", new String[]{"true"}, null);
         cursor.moveToFirst();
         currentNode.setText(cursor.getString(cursor.getColumnIndex(NodeCache.NICK)));
-
         cursor.close();
 
+        nodeListAdapter.setCurrentNode(currentNode);
 
         nodes = (GridView) view.findViewById(R.id.node_list_view);
         nodes.setAdapter(nodeListAdapter);
@@ -110,6 +113,8 @@ public class NodeFragment extends Fragment implements AdapterView.OnItemClickLis
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+
+
     }
 
     //----------------loader----------------
@@ -117,19 +122,22 @@ public class NodeFragment extends Fragment implements AdapterView.OnItemClickLis
     public Loader onCreateLoader(int flag, Bundle bundle) {
         String selection = NodeCache.AREA + "=? and " + NodeCache.OPERATOR + "=?";
         String selection2 = NodeCache.OPERATOR + "=?";
+        CacheLoader cacheLoader = new CacheLoader(getActivity(), NodeCache.CONTENT_URI,
+                null,
+                null, null, null);
         switch (flag) {
             case 0:
-                return new CacheLoader(getActivity(), NodeCache.CONTENT_URI,
-                        null,
-                        selection, selectionArgs, null);
+                cacheLoader.setSelection(selection);
+                cacheLoader.setSelectionArgs(selectionArgs);
+                return cacheLoader;
             case 1:
-                return new CacheLoader(getActivity(), NodeCache.CONTENT_URI,
-                        null,
-                        selection2, selectionArgs, null);
+                cacheLoader.setSelection(selection2);
+                cacheLoader.setSelectionArgs(selectionArgs);
+                return cacheLoader;
             case 2:
-                return new CacheLoader(getActivity(), NodeCache.CONTENT_URI,
-                        null,
-                        null, null, null);
+                cacheLoader.setSelection(null);
+                cacheLoader.setSelectionArgs(null);
+                return cacheLoader;
             default:
                 break;
         }
@@ -139,6 +147,8 @@ public class NodeFragment extends Fragment implements AdapterView.OnItemClickLis
 
     @Override
     public void onLoadFinished(Loader<Cursor> cursorLoader, Cursor cursor) {
+
+
         nodeListAdapter.swapCursor(cursor);
     }
 
@@ -164,7 +174,7 @@ public class NodeFragment extends Fragment implements AdapterView.OnItemClickLis
     //On Item Selected Listener
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
-//        Log.d("dd", "view id is : " + view.getId() + "---" + adapterView.getId() + "-----" + id);
+        Log.d(TAG, "view id is : " + view.getId() + "----" + adapterView.getId() + "-----" + id);
         String[] cities = getResources().getStringArray(R.array.citys);
         switch (adapterView.getId()) {
             case 2130968611:
@@ -186,13 +196,19 @@ public class NodeFragment extends Fragment implements AdapterView.OnItemClickLis
                         operatorPosition = position;
                         selectionArgs = new String[]{String.valueOf(StringUtilities.getAreaCodeByProvince(cities[cityPosition])),
                                 String.valueOf(operatorPosition + 1)};
+                        getLoaderManager().destroyLoader(1);
+                        getLoaderManager().destroyLoader(2);
                         getLoaderManager().restartLoader(0, null, this).forceLoad();
                         break;
                     case 1:
                         selectionArgs = new String[]{String.valueOf(operatorPosition + 1)};
+                        getLoaderManager().destroyLoader(0);
+                        getLoaderManager().destroyLoader(2);
                         getLoaderManager().restartLoader(1, null, this).forceLoad();
                         break;
                     case 2:
+                        getLoaderManager().destroyLoader(0);
+                        getLoaderManager().destroyLoader(1);
                         getLoaderManager().restartLoader(2, null, this).forceLoad();
                         break;
                     default:

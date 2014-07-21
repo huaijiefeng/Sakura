@@ -16,7 +16,6 @@ public class SakuraApplication extends Application {
         super.onCreate();
         Log.d(TAG, "on create ......");
         Log.d(TAG, DevicesUtilities.getSNCode());
-        NetWorkUtilities.bindCdn("5");
 
         SakuraInitialization initialization = new SakuraInitialization(getApplicationContext());
         initialization.start();

@@ -42,8 +42,12 @@ public class CacheManager {
     public static void updateCheck(Context context, String cdnId, String checked) {
         ContentValues contentValues = new ContentValues();
         contentValues.put(NodeCache.CHECKED, checked);
+        ContentValues clear = new ContentValues();
+        clear.put(NodeCache.CHECKED, "false");
+        context.getContentResolver().update(NodeCache.CONTENT_URI, clear, NodeCache.CHECKED,new String[]{"true"});
         context.getContentResolver().update(NodeCache.CONTENT_URI, contentValues, NodeCache.CDN_ID, new String[]{cdnId});
     }
+
 
     public static void updateXML(Context context, String city, String operator) {
         SharedPreferences preferences = context.getSharedPreferences("sakura", Context.MODE_PRIVATE);

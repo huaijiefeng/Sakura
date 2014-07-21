@@ -103,11 +103,11 @@ public class NetWorkUtilities {
         }.start();
     }
 
-    public static void bindCdn(final String cdn) {
+    public static void bindCdn(final Context context, final String cdn) {
         new Thread() {
             @Override
             public void run() {
-                Log.d(TAG, "get bind cdn is running...");
+                Log.d(TAG, " bind cdn is running...");
                 HttpClient client = new DefaultHttpClient();
                 HttpGet get = new HttpGet(HOST + GET_NODE_URL + "?actiontype=bindecdn&sn=" +
                         DevicesUtilities.getSNCode() + "&cdn=" + cdn);
@@ -126,7 +126,10 @@ public class NetWorkUtilities {
                     e.printStackTrace();
                 }
                 HttpData httpBindcdn = new Gson().fromJson(result, HttpData.class);
-                Log.d(TAG, "get bind cdn is end...");
+                Log.d(TAG, " bind cdn is end...");
+
+                getBindcdn(context);
+
             }
         }.start();
     }

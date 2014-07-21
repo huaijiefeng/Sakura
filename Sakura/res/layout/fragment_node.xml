@@ -72,8 +72,6 @@
                 android:layout_marginLeft="20dp"
                 android:layout_toRightOf="@id/current_node"
                 android:layout_height="wrap_content"/>
-
-
         <Button
                 android:id="@+id/speed_test_btn"
                 android:layout_marginRight="10dp"
@@ -83,8 +81,6 @@
                 android:text="@string/test"
                 android:textSize="24sp"
                 />
-
-
     </RelativeLayout>
 
 

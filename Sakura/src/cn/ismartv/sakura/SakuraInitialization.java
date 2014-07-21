@@ -35,14 +35,11 @@ public class SakuraInitialization extends Thread {
                 CacheManager.updateNodeCache(context, nodes);
             }
         }
-
         NetWorkUtilities.getBindcdn(context);
-
     }
 
     private boolean isFirstInstall() {
         SharedPreferences preferences = context.getSharedPreferences("sakura", Context.MODE_PRIVATE);
-
         if (preferences.getBoolean("first_install", true)) {
             SharedPreferences.Editor editor = preferences.edit();
             editor.putBoolean("first_install", false);
@@ -51,6 +48,4 @@ public class SakuraInitialization extends Thread {
         }
         return false;
     }
-
-
 }

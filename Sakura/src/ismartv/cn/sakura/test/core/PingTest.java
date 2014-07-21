@@ -3,7 +3,6 @@ package ismartv.cn.sakura.test.core;
 import android.test.AndroidTestCase;
 import android.util.Log;
 import cn.ismartv.sakura.core.ping.Ping;
-import cn.ismartv.sakura.ui.fragment.NodeFragment;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
@@ -63,7 +62,5 @@ public class PingTest extends AndroidTestCase {
         } else {
             Log.e(TAG, response.getStatusLine().toString());
         }
-
     }
-
 }
