@@ -2,6 +2,7 @@ package cn.ismartv.sakura.ui.adapter;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import cn.ismartv.sakura.R;
 import cn.ismartv.sakura.core.httpclient.NetWorkUtilities;
 import cn.ismartv.sakura.data.Node;
 import cn.ismartv.sakura.provider.NodeCache;
+import cn.ismartv.sakura.ui.widget.progressbar.SmoothProgressBar;
 
 import java.util.HashMap;
 
@@ -17,6 +19,7 @@ import java.util.HashMap;
  * Created by fenghb on 14-6-24.
  */
 public class NodeListAdapter extends CursorAdapter implements CompoundButton.OnCheckedChangeListener {
+    private static final String TAG = NodeListAdapter.class.getSimpleName();
     private Context context;
     private TextView textView;
 
@@ -40,6 +43,7 @@ public class NodeListAdapter extends CursorAdapter implements CompoundButton.OnC
 
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
+        Log.d(TAG, "size is : " + cursor.getCount());
         TextView nodeName = (TextView) view.findViewById(R.id.node_name);
         ProgressBar nodeSpeed = (ProgressBar) view.findViewById(R.id.node_speed);
         RadioButton nodeCheck = (RadioButton) view.findViewById(R.id.node_check);

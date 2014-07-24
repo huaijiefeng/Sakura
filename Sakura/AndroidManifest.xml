@@ -30,6 +30,8 @@
                 android:theme="@style/Theme.PageIndicatorDefaults"
                 android:name=".ui.activity.HelpDetailActivity"></activity>
 
+        <activity android:name="ismartv.cn.sakura.test.ui.TestActivity"></activity>
+
         <provider android:name=".provider.SakuraProvider" android:authorities="cn.ismartv.sakura"/>
     </application>
 

@@ -44,7 +44,8 @@ public class NetWorkUtilities {
                 Log.e(TAG, response.getStatusLine().toString());
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            Log.e(TAG, e.getMessage());
+            return false;
         }
         NodeTag tag = new Gson().fromJson(result, NodeTag.class);
         Log.d(TAG, "get node tag is end...");
@@ -97,6 +98,8 @@ public class NetWorkUtilities {
                     e.printStackTrace();
                 }
                 HttpData httpBindcdn = new Gson().fromJson(result, HttpData.class);
+                if (null == httpBindcdn)
+                    return;
                 CacheManager.updateCheck(context, httpBindcdn.getSncdn().getCdnid(), "true");
                 Log.d(TAG, "get bind cdn is end...");
             }

@@ -174,22 +174,21 @@ public class NodeFragment extends Fragment implements AdapterView.OnItemClickLis
     //On Item Selected Listener
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
-        Log.d(TAG, "view id is : " + view.getId() + "----" + adapterView.getId() + "-----" + id);
         String[] cities = getResources().getStringArray(R.array.citys);
         switch (adapterView.getId()) {
-            case 2130968611:
+            case R.id.city_spinner:
                 cityPosition = position;
                 selectionArgs = new String[]{String.valueOf(StringUtilities.getAreaCodeByProvince(cities[cityPosition])),
                         String.valueOf(operatorPosition + 1)};
                 getLoaderManager().restartLoader(0, null, this).forceLoad();
                 break;
-            case 2130968613:
+            case R.id.operator:
                 operatorPosition = position;
                 selectionArgs = new String[]{String.valueOf(StringUtilities.getAreaCodeByProvince(cities[cityPosition])),
                         String.valueOf(operatorPosition + 1)};
                 getLoaderManager().restartLoader(0, null, this).forceLoad();
                 break;
-            case 2130968615:
+            case R.id.list:
                 listPosition = position;
                 switch (listPosition) {
                     case 0:

@@ -11,7 +11,6 @@
 
     <LinearLayout
             android:id="@+id/second"
-
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -32,13 +31,19 @@
                 android:textSize="24sp"
                 android:gravity="center_horizontal"
                 android:layout_height="wrap_content"/>
-        <ProgressBar
-                android:layout_marginLeft="10dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-
-
     </LinearLayout>
+    <!--<cn.ismartv.sakura.ui.widget.progressbar.SmoothProgressBar-->
+    <!--android:paddingTop="20dp"-->
+    <!--android:id="@+id/node_speed"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_below="@id/node_name"-->
+    <!--android:layout_marginRight="40dp"-->
+    <!--android:layout_marginLeft="40dp"-->
+    <!--android:indeterminateOnly="false"-->
+    <!--android:indeterminate="true"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--/>-->
+
     <ProgressBar
             android:paddingTop="20dp"
             android:id="@+id/node_speed"

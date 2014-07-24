@@ -85,7 +85,6 @@
 
 
     <GridView
-            android:descendantFocusability="beforeDescendants"
             android:id="@+id/node_list_view"
             android:verticalSpacing="30dp"
             android:numColumns="3"

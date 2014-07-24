@@ -16,11 +16,7 @@
 
 package org.springframework.http.client;
 
-import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.HttpConnectionManager;
-import org.apache.commons.httpclient.HttpMethodBase;
-import org.apache.commons.httpclient.MultiThreadedHttpConnectionManager;
-import org.apache.commons.httpclient.methods.*;
+import org.apache.http.client.HttpClient;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.http.HttpMethod;
 import org.springframework.util.Assert;

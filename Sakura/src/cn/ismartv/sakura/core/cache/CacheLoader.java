@@ -4,11 +4,13 @@ import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.support.v4.content.CursorLoader;
+import android.util.Log;
 
 /**
  * Created by fenghb on 14-7-14.
  */
 public class CacheLoader extends CursorLoader {
+    private static final String TAG = CacheLoader.class.getSimpleName();
     private Context context;
 
     public CacheLoader(Context context) {
@@ -23,6 +25,7 @@ public class CacheLoader extends CursorLoader {
 
     @Override
     public Cursor loadInBackground() {
+        Log.d(TAG, "size is : " + super.loadInBackground().getCount());
         return super.loadInBackground();
     }
 }
