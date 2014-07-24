@@ -24,7 +24,6 @@ public class SmoothProgressDrawable extends Drawable implements Animatable {
     private static final long FRAME_DURATION = 1000 / 60;
     private final static float OFFSET_PER_FRAME = 0.01f;
 
-    private final Rect fBackgroundRect = new Rect();
     private Callbacks mCallbacks;
     private Interpolator mInterpolator;
     private Rect mBounds;
@@ -39,7 +38,6 @@ public class SmoothProgressDrawable extends Drawable implements Animatable {
     private float mSpeed;
     private float mProgressiveStartSpeed;
     private float mProgressiveStopSpeed;
-    private boolean mNewTurn;
     private float mMaxOffset;
     private boolean mFinishing;
     private boolean mProgressiveStartActivated;
@@ -60,8 +58,6 @@ public class SmoothProgressDrawable extends Drawable implements Animatable {
                                    float speed,
                                    float progressiveStartSpeed,
                                    float progressiveStopSpeed,
-                                   boolean reversed,
-                                   boolean mirrorMode,
                                    Callbacks callbacks,
                                    boolean progressiveStartActivated,
                                    Drawable backgroundDrawable,
@@ -206,62 +202,13 @@ public class SmoothProgressDrawable extends Drawable implements Animatable {
     public void draw(Canvas canvas) {
         mBounds = getBounds();
         canvas.clipRect(mBounds);
-
-        //new turn
-        if (mNewTurn) {
-            mColorsIndex = decrementColor(mColorsIndex);
-            mNewTurn = false;
-
-            if (isFinishing()) {
-                mStartSection++;
-
-                if (mStartSection > mSectionsCount) {
-                    stop();
-                    return;
-                }
-            }
-            if (mCurrentSections < mSectionsCount) {
-                mCurrentSections++;
-            }
+        if (isRunning())
+            drawStrokes(canvas);
+        else {
+            canvas.drawRect(100,200 , 900, 150, mPaint);
         }
-
-        if (mUseGradients)
-            drawGradient(canvas);
-
-        drawStrokes(canvas);
     }
 
-    private void drawGradient(Canvas canvas) {
-        float xSectionWidth = 1f / mSectionsCount;
-        int currentIndexColor = mColorsIndex;
-
-        mLinearGradientPositions[0] = 0f;
-        mLinearGradientPositions[mLinearGradientPositions.length - 1] = 1f;
-        int firstColorIndex = currentIndexColor - 1;
-        if (firstColorIndex < 0) firstColorIndex += mColors.length;
-
-        mLinearGradientColors[0] = mColors[firstColorIndex];
-
-        for (int i = 0; i < mSectionsCount; ++i) {
-
-            float position = mInterpolator.getInterpolation(i * xSectionWidth + mCurrentOffset);
-            mLinearGradientPositions[i + 1] = position;
-            mLinearGradientColors[i + 1] = mColors[currentIndexColor];
-
-            currentIndexColor = (currentIndexColor + 1) % mColors.length;
-        }
-        mLinearGradientColors[mLinearGradientColors.length - 1] = mColors[currentIndexColor];
-
-        float left = mBounds.left;
-        float right = mBounds.right;
-        float top = mBounds.centerY() - mStrokeWidth / 2;
-        float bottom = mBounds.centerY() + mStrokeWidth / 2;
-        LinearGradient linearGradient = new LinearGradient(left, top, right, bottom,
-                mLinearGradientColors, mLinearGradientPositions,
-                Shader.TileMode.CLAMP);
-
-        mPaint.setShader(linearGradient);
-    }
 
     private void drawStrokes(Canvas canvas) {
 
@@ -273,8 +220,6 @@ public class SmoothProgressDrawable extends Drawable implements Animatable {
 
         float startX;
         float endX;
-        float firstX = 0;
-        float lastX = 0;
         float prev;
         float end;
         float spaceLength;
@@ -283,10 +228,6 @@ public class SmoothProgressDrawable extends Drawable implements Animatable {
         float sectionWidth;
         float drawLength;
         int currentIndexColor = mColorsIndex;
-
-        if (mStartSection == mCurrentSections && mCurrentSections == mSectionsCount) {
-            firstX = canvas.getWidth();
-        }
 
         for (int i = 0; i <= mCurrentSections; ++i) {
             xOffset = xSectionWidth * i + mCurrentOffset;
@@ -307,19 +248,13 @@ public class SmoothProgressDrawable extends Drawable implements Animatable {
                 startX = Math.max(xFinishingOffset * width, Math.min(boundsWidth, prevValue));
                 endX = Math.min(boundsWidth, end);
                 drawLine(canvas, boundsWidth, startX, centerY, endX, centerY, currentIndexColor);
-                if (i == mStartSection) { // first loop
-                    firstX = startX - mSeparatorLength;
-                }
             }
-            if (i == mCurrentSections) {
-                lastX = prevValue + sectionWidth; //because we want to keep the separator effect
-            }
+
 
             prevValue = end + spaceLength;
             currentIndexColor = incrementColor(currentIndexColor);
         }
 
-        drawBackgroundIfNeeded(canvas, firstX, lastX);
     }
 
     private void drawLine(Canvas canvas, int canvasWidth, float startX, float startY, float stopX, float stopY, int currentIndexColor) {
@@ -328,55 +263,10 @@ public class SmoothProgressDrawable extends Drawable implements Animatable {
         canvas.drawLine(startX, startY, stopX, stopY, mPaint);
     }
 
-    private void drawBackgroundIfNeeded(Canvas canvas, float firstX, float lastX) {
-        if (mBackgroundDrawable == null) return;
-
-        fBackgroundRect.top = (int) ((canvas.getHeight() - mStrokeWidth) / 2);
-        fBackgroundRect.bottom = (int) ((canvas.getHeight() + mStrokeWidth) / 2);
-
-        fBackgroundRect.left = 0;
-        fBackgroundRect.right = canvas.getWidth();
-        mBackgroundDrawable.setBounds(fBackgroundRect);
-
-        //draw the background if the animation is over
-        if (!isRunning()) {
-            drawBackground(canvas, 0, fBackgroundRect.width());
-            return;
-        }
-
-        if (!isFinishing() && !isStarting()) return;
-
-        if (firstX > lastX) {
-            float temp = firstX;
-            firstX = lastX;
-            lastX = temp;
-        }
-
-        if (firstX > 0) {
-            drawBackground(canvas, 0, firstX);
-        }
-        if (lastX <= canvas.getWidth()) {
-            drawBackground(canvas, lastX, canvas.getWidth());
-        }
-    }
-
-    private void drawBackground(Canvas canvas, float fromX, float toX) {
-        int count = canvas.save();
-        canvas.clipRect(fromX, (int) ((canvas.getHeight() - mStrokeWidth) / 2),
-                toX, (int) ((canvas.getHeight() + mStrokeWidth) / 2));
-        mBackgroundDrawable.draw(canvas);
-        canvas.restoreToCount(count);
-    }
 
     private int incrementColor(int colorIndex) {
         ++colorIndex;
         if (colorIndex >= mColors.length) colorIndex = 0;
-        return colorIndex;
-    }
-
-    private int decrementColor(int colorIndex) {
-        --colorIndex;
-        if (colorIndex < 0) colorIndex = mColors.length - 1;
         return colorIndex;
     }
 
@@ -415,12 +305,6 @@ public class SmoothProgressDrawable extends Drawable implements Animatable {
     public void progressiveStop() {
         mFinishing = true;
         mStartSection = 0;
-    }
-
-    public void progressiveStopWithResult() {
-        mFinishing = true;
-        mStartSection = 0;
-
     }
 
     @Override
@@ -484,6 +368,7 @@ public class SmoothProgressDrawable extends Drawable implements Animatable {
 
     private final Runnable mUpdater = new Runnable() {
 
+
         @Override
         public void run() {
             if (isFinishing()) {
@@ -499,7 +384,6 @@ public class SmoothProgressDrawable extends Drawable implements Animatable {
             }
 
             if (mCurrentOffset >= mMaxOffset) {
-                mNewTurn = true;
                 mCurrentOffset -= mMaxOffset;
             }
 
@@ -539,8 +423,6 @@ public class SmoothProgressDrawable extends Drawable implements Animatable {
         private float mSpeed;
         private float mProgressiveStartSpeed;
         private float mProgressiveStopSpeed;
-        private boolean mReversed;
-        private boolean mMirrorMode;
         private float mStrokeWidth;
         private int mStrokeSeparatorLength;
         private boolean mProgressiveStartActivated;
@@ -567,8 +449,6 @@ public class SmoothProgressDrawable extends Drawable implements Animatable {
                     mSpeed,
                     mProgressiveStartSpeed,
                     mProgressiveStopSpeed,
-                    mReversed,
-                    mMirrorMode,
                     mOnProgressiveStopEndedListener,
                     mProgressiveStartActivated,
                     mBackgroundDrawableWhenHidden,
@@ -584,7 +464,6 @@ public class SmoothProgressDrawable extends Drawable implements Animatable {
             mSpeed = Float.parseFloat(res.getString(R.string.spb_default_speed));
             mProgressiveStartSpeed = mSpeed;
             mProgressiveStopSpeed = mSpeed;
-            mReversed = res.getBoolean(R.bool.spb_default_reversed);
             mStrokeSeparatorLength = res.getDimensionPixelSize(R.dimen.spb_default_stroke_separator_length);
             mStrokeWidth = res.getDimensionPixelOffset(R.dimen.spb_default_stroke_width);
             mProgressiveStartActivated = res.getBoolean(R.bool.spb_default_progressiveStart_activated);
@@ -649,15 +528,6 @@ public class SmoothProgressDrawable extends Drawable implements Animatable {
             return this;
         }
 
-        public Builder reversed(boolean reversed) {
-            mReversed = reversed;
-            return this;
-        }
-
-        public Builder mirrorMode(boolean mirrorMode) {
-            mMirrorMode = mirrorMode;
-            return this;
-        }
 
         public Builder progressiveStart(boolean progressiveStartActivated) {
             mProgressiveStartActivated = progressiveStartActivated;

@@ -32,30 +32,30 @@
                 android:gravity="center_horizontal"
                 android:layout_height="wrap_content"/>
     </LinearLayout>
-    <!--<cn.ismartv.sakura.ui.widget.progressbar.SmoothProgressBar-->
-    <!--android:paddingTop="20dp"-->
-    <!--android:id="@+id/node_speed"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_below="@id/node_name"-->
-    <!--android:layout_marginRight="40dp"-->
-    <!--android:layout_marginLeft="40dp"-->
-    <!--android:indeterminateOnly="false"-->
-    <!--android:indeterminate="true"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--/>-->
+    <cn.ismartv.sakura.ui.widget.progressbar.SmoothProgressBar
+    android:paddingTop="20dp"
+    android:id="@+id/node_speed"
+    android:layout_width="match_parent"
+    android:layout_below="@id/node_name"
+    android:layout_marginRight="40dp"
+    android:layout_marginLeft="40dp"
+    android:indeterminateOnly="false"
+    android:indeterminate="true"
+    android:layout_height="wrap_content"
+    />
 
-    <ProgressBar
-            android:paddingTop="20dp"
-            android:id="@+id/node_speed"
-            style="?android:attr/progressBarStyleHorizontal"
-            android:max="100"
-            android:progress="50"
-            android:layout_width="match_parent"
-            android:layout_below="@id/node_name"
-            android:progressDrawable="@drawable/progressbar"
-            android:layout_marginRight="40dp"
-            android:layout_marginLeft="40dp"
-            android:layout_height="wrap_content"/>
+    <!--<ProgressBar-->
+            <!--android:paddingTop="20dp"-->
+            <!--android:id="@+id/node_speed"-->
+            <!--style="?android:attr/progressBarStyleHorizontal"-->
+            <!--android:max="100"-->
+            <!--android:progress="50"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_below="@id/node_name"-->
+            <!--android:progressDrawable="@drawable/progressbar"-->
+            <!--android:layout_marginRight="40dp"-->
+            <!--android:layout_marginLeft="40dp"-->
+            <!--android:layout_height="wrap_content"/>-->
 
 
     <!--<Button-->

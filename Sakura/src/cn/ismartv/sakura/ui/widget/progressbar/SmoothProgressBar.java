@@ -48,8 +48,6 @@ public class SmoothProgressBar extends ProgressBar {
         final float speedProgressiveStart = a.getFloat(R.styleable.SmoothProgressBar_spb_progressiveStart_speed, speed);
         final float speedProgressiveStop = a.getFloat(R.styleable.SmoothProgressBar_spb_progressiveStop_speed, speed);
         final int iInterpolator = a.getInteger(R.styleable.SmoothProgressBar_spb_interpolator, -1);
-        final boolean reversed = a.getBoolean(R.styleable.SmoothProgressBar_spb_reversed, res.getBoolean(R.bool.spb_default_reversed));
-        final boolean mirrorMode = a.getBoolean(R.styleable.SmoothProgressBar_spb_mirror_mode, res.getBoolean(R.bool.spb_default_mirror_mode));
         final int colorsId = a.getResourceId(R.styleable.SmoothProgressBar_spb_colors, 0);
         final boolean progressiveStartActivated = a.getBoolean(R.styleable.SmoothProgressBar_spb_progressiveStart_activated, res.getBoolean(R.bool.spb_default_progressiveStart_activated));
         final Drawable backgroundDrawable = a.getDrawable(R.styleable.SmoothProgressBar_spb_background);
@@ -62,6 +60,7 @@ public class SmoothProgressBar extends ProgressBar {
         if (iInterpolator == -1) {
             interpolator = getInterpolator();
         }
+
         if (interpolator == null) {
             switch (iInterpolator) {
                 case INTERPOLATOR_ACCELERATEDECELERATE:
@@ -93,8 +92,6 @@ public class SmoothProgressBar extends ProgressBar {
                 .sectionsCount(sectionsCount)
                 .separatorLength(separatorLength)
                 .strokeWidth(strokeWidth)
-                .reversed(reversed)
-                .mirrorMode(mirrorMode)
                 .progressiveStart(progressiveStartActivated)
                 .gradients(gradients);
 
@@ -140,68 +137,7 @@ public class SmoothProgressBar extends ProgressBar {
             ((SmoothProgressDrawable) ret).setInterpolator(interpolator);
     }
 
-    public void setSmoothProgressDrawableInterpolator(Interpolator interpolator) {
-        checkIndeterminateDrawable().setInterpolator(interpolator);
-    }
-
-    public void setSmoothProgressDrawableColors(int[] colors) {
-        checkIndeterminateDrawable().setColors(colors);
-    }
-
-    public void setSmoothProgressDrawableColor(int color) {
-        checkIndeterminateDrawable().setColor(color);
-    }
-
-    public void setSmoothProgressDrawableSpeed(float speed) {
-        checkIndeterminateDrawable().setSpeed(speed);
-    }
-
-    public void setSmoothProgressDrawableProgressiveStartSpeed(float speed) {
-        checkIndeterminateDrawable().setProgressiveStartSpeed(speed);
-    }
-
-    public void setSmoothProgressDrawableProgressiveStopSpeed(float speed) {
-        checkIndeterminateDrawable().setProgressiveStopSpeed(speed);
-    }
-
-    public void setSmoothProgressDrawableSectionsCount(int sectionsCount) {
-        checkIndeterminateDrawable().setSectionsCount(sectionsCount);
-    }
-
-    public void setSmoothProgressDrawableSeparatorLength(int separatorLength) {
-        checkIndeterminateDrawable().setSeparatorLength(separatorLength);
-    }
-
-    public void setSmoothProgressDrawableStrokeWidth(float strokeWidth) {
-        checkIndeterminateDrawable().setStrokeWidth(strokeWidth);
-    }
-
-
-    public void setProgressiveStartActivated(boolean progressiveStartActivated) {
-        checkIndeterminateDrawable().setProgressiveStartActivated(progressiveStartActivated);
-    }
-
-    public void setSmoothProgressDrawableCallbacks(SmoothProgressDrawable.Callbacks listener) {
-        checkIndeterminateDrawable().setCallbacks(listener);
-    }
-
-    public void setSmoothProgressDrawableBackgroundDrawable(Drawable drawable) {
-        checkIndeterminateDrawable().setBackgroundDrawable(drawable);
-    }
-
-    public void setSmoothProgressDrawableUseGradients(boolean useGradients) {
-        checkIndeterminateDrawable().setUseGradients(useGradients);
-    }
-
-    public void progressiveStart() {
-        checkIndeterminateDrawable().progressiveStart();
-    }
-
-    public void progressiveStop() {
-        checkIndeterminateDrawable().progressiveStop();
-    }
-
-    public void progressiveStopWithResult() {
+    public void stopProgress() {
         checkIndeterminateDrawable().progressiveStop();
     }
 }
