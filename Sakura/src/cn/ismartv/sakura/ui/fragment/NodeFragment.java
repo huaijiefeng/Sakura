@@ -47,6 +47,10 @@ public class NodeFragment extends Fragment implements AdapterView.OnItemClickLis
 
     private int cityPosition, operatorPosition, listPosition;
 
+    DownloadTask downloadTask;
+
+    boolean running = false;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -163,7 +167,16 @@ public class NodeFragment extends Fragment implements AdapterView.OnItemClickLis
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.speed_test_btn:
-                speedTest();
+                if (!running) {
+                    speedTest(true);
+                    running = true;
+                    speedTestBtn.setText(R.string.pause);
+
+                } else {
+                    speedTest(false);
+                    running = false;
+                    speedTestBtn.setText(R.string.test);
+                }
                 break;
             default:
                 break;
@@ -226,10 +239,15 @@ public class NodeFragment extends Fragment implements AdapterView.OnItemClickLis
     //------------------------------------------------------------
 
 
-    private void speedTest() {
-        DownloadTask downloadTask = new DownloadTask(getActivity(), nodeListAdapter.getCursor());
-        if (!downloadTask.isAlive()) {
+    private void speedTest(boolean running) {
+        if (null == downloadTask) {
+            downloadTask = new DownloadTask(getActivity(), nodeListAdapter.getCursor());
+        }
+        if (running) {
             downloadTask.start();
+        } else {
+            downloadTask.setRunning(running);
+            downloadTask = null;
         }
     }
 

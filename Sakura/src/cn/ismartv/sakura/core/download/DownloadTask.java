@@ -30,6 +30,12 @@ public class DownloadTask extends Thread {
 
     private List<Map<String, String>> nodes;
 
+    public void setRunning(boolean running) {
+        this.running = running;
+    }
+
+    private volatile boolean running = true;
+
 
     public DownloadTask(Context context, Cursor cursor) {
         this.context = context;
@@ -46,46 +52,63 @@ public class DownloadTask extends Thread {
     @Override
     public void run() {
         for (Map<String, String> map : nodes) {
-            Log.d(TAG, "call is running......");
-            Timer timer = new Timer();
-            timer.start();
-            int bytesum = 0;
-            int byteread;
+            if (running) {
+                Log.d(TAG, "call is running......");
+                Timer timer = new Timer();
+                timer.start();
+                int bytesum = 0;
+                int byteread;
 
-            File fileName;
-            URL url;
-            try {
-                long startTime = System.currentTimeMillis();
-                url = new URL(map.get("url"));
-                String cndId = map.get("cdn_id");
-                Log.d(TAG, "url is : " + url + "cdn id is : " + cndId);
-                fileName = new File(DevicesUtilities.getAppCacheDirectory(), url.getHost() + SUFFIX);
-                URLConnection conn = url.openConnection();
-                InputStream inStream = conn.getInputStream();
-                FileOutputStream fs = new FileOutputStream(fileName);
-                byte[] buffer = new byte[1024];
-                while ((byteread = inStream.read(buffer)) != -1 && timer.timer < TIME_OVER) {
-                    bytesum += byteread;
+                File fileName;
+                URL url;
+                try {
+                    long startTime = System.currentTimeMillis();
+                    url = new URL(map.get("url"));
+                    String cndId = map.get("cdn_id");
+                    Log.d(TAG, "url is : " + url + "cdn id is : " + cndId);
+                    fileName = new File(DevicesUtilities.getAppCacheDirectory(), url.getHost() + SUFFIX);
+                    URLConnection conn = url.openConnection();
+                    InputStream inStream = conn.getInputStream();
+                    FileOutputStream fs = new FileOutputStream(fileName);
+                    byte[] buffer = new byte[1024];
+                    while ((byteread = inStream.read(buffer)) != -1 && timer.timer < TIME_OVER) {
+                        bytesum += byteread;
 //                Log.d(TAG, getSize(bytesum) + " time : " + timer);
-                    fs.write(buffer, 0, byteread);
+                        fs.write(buffer, 0, byteread);
+                    }
+                    long stopTime = System.currentTimeMillis();
+                    String speed = getKBperSECOND(bytesum, startTime, stopTime);
+                    Log.d(TAG, "download size is : " + getSize(bytesum) + " speed is : " + speed);
+                    //update node cache
+                    CacheManager.updateNodeCache(context, cndId, speed);
+                    fs.flush();
+                    fs.close();
+                    inStream.close();
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
-                long stopTime = System.currentTimeMillis();
-                String speed = getKBperSECOND(bytesum, startTime, stopTime);
-                Log.d(TAG, "download size is : " + getSize(bytesum) + " speed is : " + speed);
-                //update node cache
-                CacheManager.updateNodeCache(context, cndId, speed);
-                fs.flush();
-                fs.close();
-                inStream.close();
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
             }
         }
     }
+    // calculate download speed
+
+    private final String getKBperSECOND(long dataByte, long start, long stop) {
+        return String.valueOf(((float) dataByte) / ((float) (stop - start)) * (1024f / 1000f));
+    }
+
+    private final String getSize(long data) {
+        if (data < 1024)
+            return data + " byte";
+        else if (1024 <= data && data < 1024 * 1024)
+            return ((float) data / 1024) + " kb";
+        else
+            return ((float) data / 1024 / 1024) + " mb";
+    }
+
 
     class Timer extends Thread {
         private long timer;
@@ -101,19 +124,5 @@ public class DownloadTask extends Thread {
                 }
             }
         }
-    }
-
-    // calculate download speed
-    private final String getKBperSECOND(long dataByte, long start, long stop) {
-        return String.valueOf(((float) dataByte) / ((float) (stop - start)) * (1024f / 1000f));
-    }
-
-    private final String getSize(long data) {
-        if (data < 1024)
-            return data + " byte";
-        else if (1024 <= data && data < 1024 * 1024)
-            return ((float) data / 1024) + " kb";
-        else
-            return ((float) data / 1024 / 1024) + " mb";
     }
 }

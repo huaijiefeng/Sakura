@@ -81,5 +81,6 @@
     <string name="operator">运营商:</string>
     <string name="list">列表:</string>
     <string name="test">测速</string>
+    <string name="pause">暂停</string>
     <string name="current_node">当前节点:</string>
 </resources>
