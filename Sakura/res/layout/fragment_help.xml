@@ -12,20 +12,25 @@
             android:orientation="horizontal"
             >
 
-
         <Button
                 android:id="@+id/top_left"
                 android:layout_marginRight="40dp"
-                android:text="1"
+                android:text="@string/help1"
                 android:layout_width="600dp"
                 android:layout_height="200dp"
+                android:textSize="32sp"
+                android:background="#2235b5e5"
+                android:textColor="#EEE5DE"
                 />
         <Button
                 android:id="@+id/top_right"
                 android:layout_marginLeft="40dp"
-                android:text="1"
+                android:text="@string/help2"
                 android:layout_width="600dp"
                 android:layout_height="200dp"
+                android:textSize="32sp"
+                android:background="#2235b5e5"
+                android:textColor="#EEE5DE"
                 />
 
     </LinearLayout>
@@ -37,16 +42,22 @@
         <Button
                 android:id="@+id/bottom_left"
                 android:layout_marginRight="40dp"
-                android:text="1"
+                android:text="@string/help3"
                 android:layout_width="600dp"
+                android:background="#2235b5e5"
                 android:layout_height="200dp"
+                android:textSize="32sp"
+                android:textColor="#EEE5DE"
                 />
         <Button
                 android:id="@+id/bottom_right"
                 android:layout_marginLeft="40dp"
-                android:text="1"
+                android:text="@string/help4"
                 android:layout_width="600dp"
                 android:layout_height="200dp"
+                android:textSize="32sp"
+                android:textColor="#EEE5DE"
+                android:background="#2235b5e5"
                 />
     </LinearLayout>
 

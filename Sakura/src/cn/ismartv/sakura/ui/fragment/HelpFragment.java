@@ -1,12 +1,14 @@
 package cn.ismartv.sakura.ui.fragment;
 
 import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import cn.ismartv.sakura.R;
 import cn.ismartv.sakura.ui.activity.HelpDetailActivity;
 

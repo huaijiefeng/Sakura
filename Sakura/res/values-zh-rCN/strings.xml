@@ -83,4 +83,10 @@
     <string name="test">测速</string>
     <string name="pause">暂停</string>
     <string name="current_node">当前节点:</string>
+    <string name="help1">点播功能使用咨询了解</string>
+    <string name="help2">乐商店或其他软件安装使用咨询</string>
+    <string name="help3">硬件或配件咨询</string>
+    <string name="help4">测速太低或提示无法连网</string>
+
+
 </resources>
